@@ -1,6 +1,37 @@
 package com.wen.repository.solution0001To0099;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution0070To0079 {
+
+    /**
+     * 78. Subsets
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        return subsets(nums, 0);
+    }
+    private List<List<Integer>> subsets(int[] nums, int index) {
+        List<List<Integer>> lists = new ArrayList<>();
+
+        if (index >= nums.length) {
+            lists.add(new ArrayList<>());
+        }
+        else {
+            List<List<Integer>> subLists = subsets(nums, index + 1);
+
+            for (List<Integer> subList :
+                    subLists) {
+                List<Integer> newList = new ArrayList<>();
+                newList.addAll(subList);
+                newList.add(nums[index]);
+                lists.add(newList);
+                lists.add(subList);
+            }
+        }
+
+        return lists;
+    }
 
     /**
      * 79. 单词搜索
