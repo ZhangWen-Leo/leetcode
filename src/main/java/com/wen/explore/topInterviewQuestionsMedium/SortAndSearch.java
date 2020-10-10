@@ -5,34 +5,8 @@ import java.util.*;
 public class SortAndSearch {
     /**
      * 颜色分类
+     * 见：75
      */
-    public void sortColors(int[] nums) {
-        int start = 0, end = nums.length-1, i;
-        if (nums.length == 0) {
-            return;
-        }
-        while (start <= end && nums[start] == 0) {
-            start++;
-        }
-        while (end >= start && nums[end] == 2) {
-            end--;
-        }
-        i = start;
-        while (i <= end) {
-            if (nums[i] == 0) {
-                nums[i] = nums[start];
-                nums[start++] = 0;
-                i++;
-            }
-            else if (nums[i] == 2) {
-                nums[i] = nums[end];
-                nums[end--] = 2;
-            }
-            else {
-                i++;
-            }
-        }
-    }
 
     /**
      * 前 K 个高频元素

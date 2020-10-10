@@ -1,5 +1,6 @@
 package com.wen.common;
 
+import com.wen.dataStructure.ListNode;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -29,5 +30,15 @@ public class CommonTest {
         while (ite.hasNext()) {
             System.out.println(ite.next());
         }
+    }
+
+    @Test
+    public void test4() {
+        ListNode a = ListNode.createList(new int[]{-21,10,17,8,4,26,5,35,33,-7,-16,27,-12,6,29,-12,5,9,20,14,14,2,13,-24,21,23,-21,5});
+    }
+
+    @Test
+    public void test5() {
+        System.out.println(Integer.MAX_VALUE);
     }
 }

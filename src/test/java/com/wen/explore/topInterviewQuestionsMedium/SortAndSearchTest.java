@@ -13,7 +13,7 @@ public class SortAndSearchTest {
     @Test
     public void sortColors() {
         int[] a = {0,0,0,0};
-        sortAndSearch.sortColors(a);
+//        sortAndSearch.sortColors(a);
         System.out.println(Arrays.toString(a));
     }
 
