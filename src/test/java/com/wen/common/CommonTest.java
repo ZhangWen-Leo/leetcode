@@ -1,6 +1,7 @@
 package com.wen.common;
 
 import com.wen.dataStructure.ListNode;
+import com.wen.dataStructure.TreeNode;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -40,5 +41,11 @@ public class CommonTest {
     @Test
     public void test5() {
         System.out.println(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void test6() {
+        TreeNode t = TreeNode.buildTree(new Integer[]{1,0,10,null,null,4});
+        System.out.println(t);
     }
 }
