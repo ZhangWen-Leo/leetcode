@@ -1,10 +1,26 @@
 package com.wen.repository.solution0001To0099;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution0001To0009 {
+
+    /**
+     * 1. Two Sum
+     */
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i])) {
+                return new int[]{map.get(nums[i]), i};
+            }
+            else {
+                map.put(target - nums[i], i);
+            }
+        }
+
+        throw new RuntimeException("错误的参数");
+    }
 
     /**
      * 4. Median of Two Sorted Arrays
