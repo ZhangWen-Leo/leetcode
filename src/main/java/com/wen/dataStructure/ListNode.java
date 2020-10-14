@@ -15,6 +15,24 @@ public class ListNode {
         this.next = next;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        int count = 100;
+        ListNode p = next;
+
+        s.append(val);
+        while (count-- > 0 && p != null) {
+            s.append(" -> " + p.val);
+            p = p.next;
+        }
+        if (p != null) {
+            s.append(" -> ...");
+        }
+
+        return s.toString();
+    }
+
     public static ListNode createList(int[] list) {
         if (list.length == 0) {
             return null;

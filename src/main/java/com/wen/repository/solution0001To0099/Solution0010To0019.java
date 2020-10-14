@@ -150,4 +150,70 @@ public class Solution0010To0019 {
 
         return result;
     }
+
+    /**
+     * 16. 3Sum Closest
+     */
+    public int threeSumClosest(int[] nums, int target) {
+        if (nums.length < 3) {
+            throw new RuntimeException("没有3个数");
+        }
+
+        Arrays.sort(nums);
+        int[] threeNums = {0, 1, 2};
+        int oldClosestSum = calculateSum(nums, threeNums);
+        int newClosestSum = oldClosestSum;
+
+        while (newClosestSum < target) {
+            int max = Integer.MIN_VALUE, maxIndex = -1;
+            int min = Integer.MAX_VALUE, minIndex = -1;
+
+            for (int i = 0; i < threeNums.length; i++) {
+                if (
+                        (i < threeNums.length-1 && threeNums[i] + 1 < threeNums[i+1])
+                        || (i == threeNums.length-1 && threeNums[i] < nums.length-1)
+                ) {
+                    int diff = nums[threeNums[i]+1] - nums[threeNums[i]];
+
+                    if (newClosestSum + diff < target && diff < max) {
+                        max = diff;
+                        maxIndex = i;
+                    }
+                    if (diff < min) {
+                        min = diff;
+                        minIndex = i;
+                    }
+                }
+            }
+
+            if (maxIndex != -1) {
+                oldClosestSum = newClosestSum;
+                newClosestSum += max;
+                threeNums[maxIndex]++;
+            }
+            else if (minIndex != -1) {
+                oldClosestSum = newClosestSum;
+                newClosestSum += min;
+                threeNums[minIndex]++;
+            }
+            else {
+                break;
+            }
+        }
+
+        if (newClosestSum > target) {
+            return Math.abs(newClosestSum-target) - Math.abs(oldClosestSum-target) > 0 ? oldClosestSum : newClosestSum;
+        }
+        else {
+            return newClosestSum;
+        }
+    }
+    private int calculateSum(int[] nums, int[] indexes) {
+        int sum = 0;
+        for (int index :
+                indexes) {
+            sum += nums[index];
+        }
+        return sum;
+    }
 }

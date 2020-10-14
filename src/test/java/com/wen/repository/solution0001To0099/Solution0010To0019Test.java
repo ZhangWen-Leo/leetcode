@@ -20,4 +20,12 @@ public class Solution0010To0019Test {
         };
         System.out.println(solution.threeSum(nums));
     }
+
+    @Test
+    public void threeSumClosest() {
+        int[] nums = {
+                1,2,4,8,16,32,64,128
+        };
+        System.out.println(solution.threeSumClosest(nums, 82));
+    }
 }
