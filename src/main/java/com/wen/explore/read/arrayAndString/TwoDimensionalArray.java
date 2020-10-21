@@ -7,29 +7,8 @@ import java.util.Set;
 public class TwoDimensionalArray {
     /**
      * 旋转矩阵
+     * 见48
      */
-    public void rotate(int[][] matrix) {
-        for (int i = 0; i <= (matrix.length - 1) / 2; i++) {
-            for (int j = 0; j < matrix.length / 2; j++) {
-                rotateOne(matrix, i, j);
-            }
-        }
-    }
-    private void rotateOne(int[][] matrix, int x, int y) {
-        int length = matrix.length;
-        int temp = matrix[x][y];
-
-
-        for (int i = 0; i < 4; i++) {
-            int newX = y;
-            int newY = length - 1 - x;
-            temp += matrix[newX][newY];
-            matrix[newX][newY] = temp - matrix[newX][newY];
-            temp -= matrix[newX][newY];
-            x = newX;
-            y = newY;
-        }
-    }
 
     /**
      * 零矩阵

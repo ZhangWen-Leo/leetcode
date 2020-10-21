@@ -1,5 +1,6 @@
 package com.wen.repository.solution0100To0199;
 
+import com.wen.dataStructure.Node;
 import com.wen.dataStructure.TreeNode;
 
 import java.util.ArrayList;
@@ -40,6 +41,35 @@ public class Solution0110To0119 {
         }
 
         return lists;
+    }
+
+    /**
+     * 116. Populating Next Right Pointers in Each Node
+     */
+    public Node connectFor116(Node root) {
+        List<Node> list = new ArrayList<>();
+
+        normalInOrderTraverse(root, list, 0);
+
+        return root;
+    }
+    private void normalInOrderTraverse(Node root, List<Node> list, int level) {
+        if (root == null) {
+            return;
+        }
+        if (level == list.size()) {
+            Node last = root;
+            list.add(last);
+        }
+        else {
+            list.get(level).next = root;
+            list.set(level, root);
+        }
+
+        normalInOrderTraverse(root.left, list, level+1);
+        normalInOrderTraverse(root.right, list, level+1);
+
+        return;
     }
 
     /**

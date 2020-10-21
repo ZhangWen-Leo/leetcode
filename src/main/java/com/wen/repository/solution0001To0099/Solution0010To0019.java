@@ -111,7 +111,7 @@ public class Solution0010To0019 {
 
         int i = 0;
         while (i < nums.length) {
-            Set<List<Integer>> sets = twoSum(nums, i + 1, -nums[i]);
+            Set<List<Integer>> sets = twoSumForThreeSum(nums, i + 1, -nums[i]);
 
             for (List<Integer> set :
                     sets) {
@@ -129,7 +129,7 @@ public class Solution0010To0019 {
 
         return result;
     }
-    private Set<List<Integer>> twoSum(int[] nums, int start, int target) {
+    private Set<List<Integer>> twoSumForThreeSum(int[] nums, int start, int target) {
         Set<List<Integer>> result = new HashSet<>();
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -215,5 +215,52 @@ public class Solution0010To0019 {
             sum += nums[index];
         }
         return sum;
+    }
+
+    /**
+     * 18. 4Sum
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Set<List<Integer>> resultSet = new HashSet<>();
+
+        if (nums.length < 4) {
+            return result;
+        }
+
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 3; i++) {
+            for (int j = i+1; j < nums.length-2; j++) {
+                Set<List<Integer>> set = twoSumForFourSum(nums, j+1, target - nums[i] - nums[j]);
+                for (List<Integer> list :
+                        set) {
+                    list.add(0, nums[j]);
+                    list.add(0, nums[i]);
+                    resultSet.add(list);
+                }
+            }
+        }
+
+        result.addAll(resultSet);
+        return result;
+    }
+    private Set<List<Integer>> twoSumForFourSum(int[] nums, int start, int target) {
+        Set<List<Integer>> result = new HashSet<>();
+        Map<Integer, Integer> map = new HashMap<>();
+
+        if (start >= nums.length - 1) {
+            return result;
+        }
+        for (int i = start; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                List<Integer> list = new ArrayList<>();
+                list.add(target - nums[i]);
+                list.add(nums[i]);
+                result.add(list);
+            }
+            map.put(nums[i], i);
+        }
+
+        return result;
     }
 }

@@ -67,33 +67,8 @@ public class Backtracking {
 
     /**
      * 全排列
+     * 见46
      */
-    public List<List<Integer>> permute(int[] nums) {
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < nums.length; i++) {
-            list.add(nums[i]);
-        }
-        return myPermute(list);
-    }
-    private List<List<Integer>> myPermute(List<Integer> nums) {
-        List<List<Integer>> permuteLists = new ArrayList<>();
-        if (nums.size() == 0) {
-            List<Integer> list = new ArrayList<>();
-            permuteLists.add(list);
-        }
-        for (int i = 0; i < nums.size(); i++) {
-            int val = nums.get(i);
-            nums.remove(i);
-            List<List<Integer>> subLists = myPermute(nums);
-            nums.add(i, val);
-            for (List<Integer> list :
-                    subLists) {
-                list.add(0, val);
-                permuteLists.add(list);
-            }
-        }
-        return permuteLists;
-    }
 
     /**
      * 子集

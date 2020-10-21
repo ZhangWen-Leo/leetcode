@@ -12,12 +12,6 @@ public class DynamicProgramingTest {
     DynamicPrograming dynamicPrograming = new DynamicPrograming();
 
     @Test
-    public void canJump() {
-        int[] a = {1};
-        System.out.println(dynamicPrograming.canJump(a));
-    }
-
-    @Test
     public void coinChange() {
         int[] a = {186,419,83,408};
         int amount = 6249;

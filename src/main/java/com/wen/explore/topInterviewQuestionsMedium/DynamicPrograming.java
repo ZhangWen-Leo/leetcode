@@ -5,22 +5,8 @@ import java.util.*;
 public class DynamicPrograming {
     /**
      * 跳跃游戏
+     * 见55
      */
-    public boolean canJump(int[] nums) {
-        if (nums.length == 0) {
-            return false;
-        }
-        int length = nums[0];
-        for (int i = 1; i <= length && i < nums.length; i++) {
-            length = Math.max(i + nums[i], length);
-        }
-        if (length >= nums.length-1) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
     /**
      * 不同路径

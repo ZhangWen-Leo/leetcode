@@ -94,6 +94,46 @@ public class Solution0140To0149 {
     }
 
     /**
+     * 143. Reorder List
+     */
+    public void reorderList(ListNode head) {
+        List<ListNode> list = new ArrayList<>();
+        ListNode p = head;
+        while (p != null) {
+            list.add(p);
+            p = p.next;
+        }
+
+        int i = 0, j = list.size() - 1;
+        while (i < j - 1) {
+            list.get(j-1).next = null;
+            list.get(j).next = list.get(i+1);
+            list.get(i).next = list.get(j);
+            i++;
+            j--;
+        }
+    }
+    public void reorderList_2(ListNode head) {
+        ListNode tail, p = head;
+        if (p == null) {
+            return;
+        }
+        tail = p.next;
+        if (tail == null) {
+            return;
+        }
+        while (tail.next != null) {
+            p = tail;
+            tail = tail.next;
+        }
+
+        p.next = null;
+        tail.next = head.next;
+        head.next = tail;
+        reorderList_2(tail.next);
+    }
+
+    /**
      * 145. Binary Tree Postorder Traversal
      */
     List<Integer> postorderList;

@@ -102,32 +102,8 @@ public class TreeOrGraph {
 
     /**
      * 填充每个节点的下一个右侧节点指针
+     * 见116
      */
-    public Node connect(Node root) {
-        List<Node> list = new ArrayList<>();
-
-        normalInOrderTraverse(root, list, 0);
-
-        return root;
-    }
-    private void normalInOrderTraverse(Node root, List<Node> list, int level) {
-        if (root == null) {
-            return;
-        }
-        if (level == list.size()) {
-            Node last = root;
-            list.add(last);
-        }
-        else {
-            list.get(level).next = root;
-            list.set(level, root);
-        }
-
-        normalInOrderTraverse(root.left, list, level+1);
-        normalInOrderTraverse(root.right, list, level+1);
-
-        return;
-    }
 
     /**
      * 二叉搜索树中第K小的元素

@@ -1,90 +1,208 @@
 package com.wen.repository.solution0001To0099;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.wen.util.MyArrays;
+
+import java.util.*;
 
 public class Solution0030To0039 {
+
     /**
-     * 37. 解数独 TODO
+     * 31. Next Permutation
      */
-    List<Character> defaultList = new ArrayList<>(); // 默认列表，储存1-9九个字符
-    List<int[]> sudokuList = new ArrayList<>(); // 存储所有空点的坐标
-    List<Character>[][] selectList = new List[9][9];    // 存储所有点的可选字符列表
-    public void solveSudoku(char[][] board) {
-        /*
-        初始化上述三个列表
-         */
-        for (int i = 0; i < 9; i++) {
-            defaultList.add((char) (i+49));
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+
+        while (i > 0 && nums[i] <= nums[i-1]) {
+            i--;
         }
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] == '.') {
-                    selectList[i][j] = excludeList(board, i, j);
-                    sudokuList.add(new int[]{i, j});
+        if (i > 0) {
+            int j = i;
+            i--;
+            while (j < nums.length && nums[j] > nums[i]) {
+                j++;
+            }
+            j--;
+
+            int temp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = temp;
+            Arrays.sort(nums, i+1, nums.length);
+        }
+        else {
+            MyArrays.reverse(nums);
+        }
+        return;
+    }
+
+    /**
+     * 32. Longest Valid Parentheses
+     */
+    public int longestValidParentheses(String s) {
+        int[] current = new int[s.length()];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            switch (c) {
+                case '(': {
+                    current[i] = 0;
+                    stack.push(i);
+                    break;
+                }
+                case ')': {
+                    if (stack.isEmpty()) {
+                        current[i] = 0;
+                    }
+                    else {
+                        current[i] = current[i-1] + 2;
+                        int left = stack.pop();
+                        if (left > 0) {
+                            current[i] += current[left-1];
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    System.out.println("未知字符");
                 }
             }
         }
 
-        if (sudokuList.size() == 0) {
-            return;
+        int max = 0;
+        for (int i = 0; i < current.length; i++) {
+            max = Integer.max(max, current[i]);
         }
-        mySolveSudoku(board, sudokuList.get(0)[0], sudokuList.get(0)[1]);
-        return;
-    }
-    /**
-     * 利用回溯法递归选择
-     * @param board 数独表盘
-     * @param x 坐标
-     * @param y 坐标
-     * @return  不通返回false
-     */
-    private boolean mySolveSudoku(char[][] board, int x, int y) {
-        for (int i = 0; i < 9; i++) {
-            if (exclude(board, x, y, (char) (i+49))) {
-                continue;
-            }
-            else {
 
+        return max;
+    }
+
+    /**
+     * 37. 解数独
+     */
+    static final int maxSize = 9;
+    static final int charToInt = -48;
+    /*
+        三个list，分别表示行、列与区块
+        rowList.get(0)[5] == true表示第1行已存在数6
+     */
+    List<boolean[]> rowList = new ArrayList<>(maxSize);
+    List<boolean[]> colList = new ArrayList<>(maxSize);
+    List<boolean[]> blockList = new ArrayList<>(maxSize);
+    /**
+     * 主方法
+     * @param board 棋盘
+     */
+    public void solveSudoku(char[][] board) {
+        initLists();
+        for (int i = 0; i < maxSize; i++) {
+            for (int j = 0; j < maxSize; j++) {
+                char c = board[i][j];
+                if (Character.isDigit(c)) {
+                    int num = c + charToInt;
+                    rowList.get(i)[num-1] = true;
+                    colList.get(j)[num-1] = true;
+                    blockList.get(getBlock(i, j))[num-1] = true;
+                }
             }
         }
-        return false;
+
+        mySolveSudoku(board);
     }
     /**
-     * 判断一个点的某个字符是否被排斥
-     * @param num   被检查的字符
-     * @return  排斥则返回true
+     * 辅助方法，与主方法不同的是，有返回值，用于结束循环与递归调用
+     * @param board 棋盘
+     * @return      当成功解题时，返回true
      */
-    private boolean exclude(char[][] board, int x, int y, char num) {
-        for (int i = 0; i < 9; i++) {
-            if (board[i][y] == num || board[x][i] == num) {
-                return true;
+    private boolean mySolveSudoku(char[][] board) {
+        // 找到第一个未填的数
+        int i = 0, j = 0;
+        boolean found = false;
+        while (i < maxSize) {
+            j = 0;
+            while (j < maxSize) {
+                if (!Character.isDigit(board[i][j])) {
+                    found = true;
+                    break;
+                }
+                j++;
             }
+            if (found) {
+                break;
+            }
+            i++;
         }
-        int xStart = (x / 3) * 3, yStart = (y / 3) * 3;
-        for (int i = xStart; i < xStart + 3; i++) {
-            for (int j = yStart; j < yStart + 3; j++) {
-                if (board[i][j] == num) {
+        if (!found) {
+            return true;
+        }
+
+        for (int k = 0; k < maxSize; k++) {
+            if (putNum(board, k+1, i, j)) {
+                if (mySolveSudoku(board)) {
                     return true;
                 }
             }
+            withdraw(board, i, j);
         }
+
         return false;
     }
     /**
-     * 返回一个空点的可选字符list
+     * 在坐标（x,y）处填入数字num
+     * @return  可以填则返回true，冲突则返回false并不改变数独
      */
-    private List<Character> excludeList(char[][] board, int x, int y) {
-        List<Character> list = new ArrayList<>();
-        list.addAll(defaultList);
-        for (char c :
-                list) {
-            if (exclude(board, x, y, c)) {
-                list.remove(c);
-            }
+    private boolean putNum(char[][] board, int num, int x, int y) {
+        if (rowList.get(x)[num-1]) {
+            return false;
         }
-        return list;
+        else if (colList.get(y)[num-1]) {
+            return false;
+        }
+        else if (blockList.get(getBlock(x, y))[num-1]) {
+            return false;
+        }
+        else {
+            board[x][y] = (char)(num - charToInt);
+            setLists(x, y, num, true);
+            return true;
+        }
+    }
+    /**
+     * 擦掉坐标（x,y）填的数字
+     */
+    private void withdraw(char[][] board, int x, int y) {
+        if (Character.isDigit(board[x][y])) {
+            int num = board[x][y] + charToInt;
+            board[x][y] = '.';
+            setLists(x, y, num, false);
+        }
+    }
+    /**
+     * 初始化三个list
+     */
+    private void initLists() {
+        for (int i = 0; i < maxSize; i++) {
+            boolean[] row = new boolean[maxSize];
+            boolean[] col = new boolean[maxSize];
+            boolean[] block = new boolean[maxSize];
+            rowList.add(row);
+            colList.add(col);
+            blockList.add(block);
+        }
+    }
+    /**
+     * 在修改坐标（x,y）处时同步修改三个list
+     */
+    private void setLists(int x, int y, int num, boolean value) {
+        rowList.get(x)[num-1] = value;
+        colList.get(y)[num-1] = value;
+        blockList.get(getBlock(x, y))[num-1] = value;
+    }
+    /**
+     * 将坐标（x,y）映射为区块号
+     */
+    private int getBlock(int x, int y) {
+        return (x / 3) * 3 + (y / 3);
     }
 
     /**
