@@ -36,20 +36,6 @@ public class SortAndSearchTest {
     }
 
     @Test
-    public void merge() {
-        int[][] a = {
-                {1,4},
-                {2,3},
-                {2,6},
-                {1,3},
-                {8,10},
-                {5,9},
-                {11,13}
-        };
-        System.out.println(Arrays.toString(sortAndSearch.merge(a)));
-    }
-
-    @Test
     public void searchMatrix() {
         int[][] a = {
                 {1,3,5}

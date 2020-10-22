@@ -1,9 +1,6 @@
 package com.wen.repository.solution0001To0099;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Solution0050To0059 {
 
@@ -245,5 +242,192 @@ public class Solution0050To0059 {
         else {
             return false;
         }
+    }
+
+    /**
+     * 56. Merge Intervals
+     */
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+
+        List<int[]> result = new ArrayList<>();
+
+        if (intervals.length > 0) {
+            if (intervals[0].length > 0) {
+                int currentMin = intervals[0][0], currentMax = intervals[0][1];
+                for (int i = 1; i < intervals.length; i++) {
+                    if (intervals[i][0] <= currentMax) {
+                        currentMax = Integer.max(currentMax, intervals[i][1]);
+                    }
+                    else {
+                        result.add(new int[]{currentMin, currentMax});
+                        currentMin = intervals[i][0];
+                        currentMax = intervals[i][1];
+                    }
+                }
+                result.add(new int[]{currentMin, currentMax});
+            }
+            else {
+                result.add(new int[0]);
+            }
+        }
+
+        return result.toArray(new int[0][]);
+    }
+
+    /**
+     * 57. Insert Interval
+     */
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> list = new ArrayList<>();
+        for (int[] interval :
+                intervals) {
+            list.add(interval);
+        }
+
+        int leftIndex = -1, rightIndex = -1;
+        boolean leftIn = false, rightIn = false;
+
+        int i;
+        i = 0;
+        while (i < list.size()) {
+            if (newInterval[0] >= list.get(i)[0]) {
+                if (newInterval[0] <= list.get(i)[1]) {
+                    leftIndex = i;
+                    leftIn = true;
+                    break;
+                }
+            }
+            else {
+                leftIndex = i;
+                leftIn = false;
+                break;
+            }
+            i++;
+        }
+        if (i >= list.size()) {
+            leftIndex = i;
+            leftIn = false;
+            rightIndex = i;
+            rightIn = false;
+        }
+        else {
+            while (i < list.size()) {
+                if (newInterval[1] >= list.get(i)[0]) {
+                    if (newInterval[1] <= list.get(i)[1]) {
+                        rightIndex = i;
+                        rightIn = true;
+                        break;
+                    }
+                }
+                else {
+                    rightIndex = i;
+                    rightIn = false;
+                    break;
+                }
+                i++;
+            }
+            if (i >= list.size()) {
+                rightIndex = i;
+                rightIn = false;
+            }
+        }
+
+        if (leftIn) {
+            newInterval[0] = list.get(leftIndex)[0];
+        }
+        if (rightIn) {
+            newInterval[1] = list.get(rightIndex)[1];
+        }
+
+        int count = rightIndex - leftIndex;
+        while (count-- > 0) {
+            list.remove(leftIndex);
+        }
+        if (rightIn) {
+            list.remove(leftIndex);
+        }
+
+        list.add(leftIndex, newInterval);
+
+        return list.toArray(new int[0][]);
+    }
+
+    /**
+     * 58. Length of Last Word
+     */
+    public int lengthOfLastWord(String s) {
+        int i = s.length()-1;
+        int count = 0;
+        while (i >= 0 && s.charAt(i) == ' ') {
+            i--;
+        }
+        while (i >= 0 && s.charAt(i) != ' ') {
+            count++;
+            i--;
+        }
+        return count;
+    }
+
+    /**
+     * 59. Spiral Matrix II
+     */
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        if (n == 0) {
+            return matrix;
+        }
+
+        int num = 1;
+        int border = 0;
+        int x = 0, y = 0;
+        while (num <= n * n) {
+            // 向右
+            if (y >= n - border) {
+                return matrix;
+            }
+            while (y < n - border) {
+                matrix[x][y++] = num++;
+            }
+            y--;
+            x++;
+
+            // 向下
+            if (x >= n - border) {
+                return matrix;
+            }
+            while (x < n - border) {
+                matrix[x++][y] = num++;
+            }
+            x--;
+            y--;
+
+            // 向左
+            if (y < border) {
+                return matrix;
+            }
+            while (y >= border) {
+                matrix[x][y--] = num++;
+            }
+            y++;
+            x--;
+            border++;
+
+            // 向上
+            if (x < border) {
+                return matrix;
+            }
+            while (x >= border) {
+                matrix[x--][y] = num++;
+            }
+            x++;
+            y++;
+        }
+        return matrix;
     }
 }

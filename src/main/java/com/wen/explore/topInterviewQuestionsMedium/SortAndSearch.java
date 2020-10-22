@@ -101,29 +101,8 @@ public class SortAndSearch {
 
     /**
      * 合并区间
+     * 见56
      */
-    public int[][] merge(int[][] intervals) {
-        if (intervals.length == 0) {
-            return intervals;
-        }
-        List<int[]> list = new ArrayList<>();
-        Arrays.sort(intervals, ((o1, o2) -> o1[0] - o2[0]));
-
-        int currentMin = intervals[0][0], currentMax = intervals[0][1];
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] <= currentMax) {
-                currentMax = Math.max(currentMax, intervals[i][1]);
-            }
-            else {
-                list.add(new int[]{currentMin, currentMax});
-                currentMin = intervals[i][0];
-                currentMax = intervals[i][1];
-            }
-        }
-        list.add(new int[]{currentMin, currentMax});
-
-        return list.toArray(new int[0][]);
-    }
 
     /**
      * 搜索旋转排序数组

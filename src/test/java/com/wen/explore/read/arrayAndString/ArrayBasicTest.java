@@ -13,12 +13,4 @@ public class ArrayBasicTest {
         int[] a = {1,7,3,6,5,6};
         System.out.println(arrayBasic.pivotIndex(a));
     }
-
-    @Test
-    public void merge() {
-        int[][] a = new int[][]{
-                {}
-        };
-        System.out.println(arrayBasic.merge(a));
-    }
 }

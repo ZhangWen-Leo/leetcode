@@ -50,37 +50,6 @@ public class ArrayBasic {
 
     /**
      * 合并区间
+     * 见56
      */
-    public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] - o2[0];
-            }
-        });
-
-        List<int[]> result = new ArrayList<>();
-
-        if (intervals.length > 0) {
-            if (intervals[0].length > 0) {
-                int currentMin = intervals[0][0], currentMax = intervals[0][1];
-                for (int i = 1; i < intervals.length; i++) {
-                    if (intervals[i][0] <= currentMax) {
-                        currentMax = Integer.max(currentMax, intervals[i][1]);
-                    }
-                    else {
-                        result.add(new int[]{currentMin, currentMax});
-                        currentMin = intervals[i][0];
-                        currentMax = intervals[i][1];
-                    }
-                }
-                result.add(new int[]{currentMin, currentMax});
-            }
-            else {
-                result.add(new int[0]);
-            }
-        }
-
-        return result.toArray(new int[0][]);
-    }
 }
