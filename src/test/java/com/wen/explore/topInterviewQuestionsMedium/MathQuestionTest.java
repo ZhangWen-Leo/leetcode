@@ -24,11 +24,6 @@ public class MathQuestionTest {
     }
 
     @Test
-    public void mySqrt() {
-        System.out.println(math.mySqrt(2147483647));
-    }
-
-    @Test
     public void divide() {
         System.out.println(math.divide(-1, 1));
     }

@@ -63,27 +63,8 @@ public class MathQuestion {
 
     /**
      * x 的平方根
+     * 见69
      */
-    public int mySqrt(int x) {
-        if (x <= 1) {
-            return x;
-        }
-        int start = 1, end = x < 46341 ? x : 46341, i;
-        while (start < end-1) {
-            i = (start + end) / 2;
-            int y = i * i;
-            if (y > x) {
-                end = i;
-            }
-            else if (y < x) {
-                start = i;
-            }
-            else {
-                return i;
-            }
-        }
-        return (start + end) / 2;
-    }
 
     /**
      * 两数相除
