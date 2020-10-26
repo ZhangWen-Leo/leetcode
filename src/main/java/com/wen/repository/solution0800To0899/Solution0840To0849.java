@@ -31,4 +31,33 @@ public class Solution0840To0849 {
 
         return stringBuilder.toString();
     }
+
+    /**
+     * 845. Longest Mountain in Array
+     */
+    public int longestMountain(int[] A) {
+        int max = 0;
+        int start = 0;
+        while (start < A.length - 2) {
+            while (start < A.length - 2 && A[start] >= A[start + 1]) {
+                start++;
+            }
+
+            int top = start + 1;
+            while (top < A.length - 1 && A[top] < A[top+1]) {
+                top++;
+            }
+
+            int end = top;
+            while (end < A.length - 1 && A[end] > A[end+1]) {
+                end++;
+            }
+            if (end != top) {
+                max = Integer.max(max, end - start + 1);
+            }
+            start = end;
+        }
+
+        return max;
+    }
 }

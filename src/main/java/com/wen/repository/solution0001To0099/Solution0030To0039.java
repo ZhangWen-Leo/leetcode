@@ -78,6 +78,56 @@ public class Solution0030To0039 {
     }
 
     /**
+     * 33. Search in Rotated Sorted Array
+     */
+    public int search(int[] nums, int target) {
+        return rotatedSearch(nums, target, 0, nums.length);
+    }
+    private int rotatedSearch(int[] nums, int target, int start, int end) {
+        int i = (start + end) / 2, result;
+        if (start >= end) {
+            return -1;
+        }
+        if (nums[i] == target) {
+            return i;
+        }
+        else if (nums[i] > target) {
+            if (nums[i] >= nums[start]) {
+                if (target >= nums[start]) {
+                    result = Arrays.binarySearch(nums, start, i, target);
+                    return result >= 0 ? result : -1;
+                }
+                else if (target <= nums[end-1]) {
+                    return rotatedSearch(nums, target, i+1, end);
+                }
+                else {
+                    return -1;
+                }
+            }
+            else {
+                return rotatedSearch(nums, target, start, i);
+            }
+        }
+        else {
+            if (nums[i] >= nums[start]) {
+                return rotatedSearch(nums, target, i+1, end);
+            }
+            else {
+                if (target >= nums[start]) {
+                    return rotatedSearch(nums, target, start, i);
+                }
+                else if (target <= nums[end-1]) {
+                    result = Arrays.binarySearch(nums, i+1, end, target);
+                    return result >= 0 ? result : -1;
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+    }
+
+    /**
      * 37. 解数独
      */
     static final int maxSize = 9;
