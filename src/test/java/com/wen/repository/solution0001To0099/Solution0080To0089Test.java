@@ -23,4 +23,23 @@ public class Solution0080To0089Test {
         };
         System.out.println(solution.search(nums, 3));
     }
+
+    @Test
+    public void largestRectangleArea() {
+        int[] heights = {
+                1,2,3,12,23,2,12,3,412,343,21,12,1,5,6,2,3
+        };
+        System.out.println(solution.largestRectangleArea(heights));
+    }
+
+    @Test
+    public void maximalRectangle() {
+        char[][] matrix = {
+                {'1', '0', '1', '0', '0'},
+                {'1', '0', '1', '1', '1'},
+                {'1', '1', '1', '1', '1'},
+                {'1', '0', '0', '1', '0'}
+        };
+        System.out.println(solution.maximalRectangle(matrix));
+    }
 }

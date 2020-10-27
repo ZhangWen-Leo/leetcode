@@ -2,7 +2,10 @@ package com.wen.repository.solution0001To0099;
 
 import com.wen.dataStructure.ListNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Solution0080To0089 {
 
@@ -160,5 +163,89 @@ public class Solution0080To0089 {
             nodeA = nodeB;
         }
         return head;
+    }
+
+    /**
+     * 84. Largest Rectangle in Histogram
+     */
+    public int largestRectangleArea(int[] heights) {
+        List<int[]> list = new ArrayList<>();
+        int max = 0;
+
+        for (int i = 0; i < heights.length; i++) {
+            if (list.size() == 0) {
+                list.add(new int[]{i, heights[i]});
+                continue;
+            }
+
+            int j = list.size() - 1;
+            int start = i;
+            while (j >= 0 && list.get(j)[1] > heights[i]) {
+                max = Integer.max(max, list.get(j)[1] * (i - list.get(j)[0]));
+                start = list.get(j)[0];
+                list.remove(list.size() - 1);
+                j--;
+            }
+            if (j < 0 || list.get(j)[1] < heights[i]) {
+                list.add(new int[]{start, heights[i]});
+            }
+        }
+        for (int i = list.size() - 1; i >= 0; i--) {
+            max = Integer.max(max, list.get(i)[1] * (heights.length - list.get(i)[0]));
+        }
+
+        return max;
+    }
+
+    /**
+     * 85. Maximal Rectangle
+     */
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0) {
+            return 0;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        int[][] numMatrix = new int[m][n];
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            numMatrix[m-1][i] = matrix[m-1][i] - 48;
+        }
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = 0; j < n; j++) {
+                numMatrix[i][j] = matrix[i][j] == '0' ? 0 : numMatrix[i+1][j] + 1;
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            max = Integer.max(max, largestRectangleArea(numMatrix[i]));
+        }
+        return max;
+    }
+
+    /**
+     * 86. Partition List
+     */
+    public ListNode partition(ListNode head, int x) {
+        ListNode less = new ListNode(-1);
+        ListNode greater = new ListNode(-1);
+        ListNode lessTail = less, greaterTail = greater;
+
+        for (ListNode p = head; p != null; p = p.next) {
+            if (p.val < x) {
+                lessTail.next =  p;
+                lessTail = lessTail.next;
+            }
+            else {
+                greaterTail.next = p;
+                greaterTail = greaterTail.next;
+            }
+        }
+        if (less == lessTail) {
+            return greater.next;
+        }
+        else {
+            greaterTail.next = null;
+            lessTail.next = greater.next;
+            return less.next;
+        }
     }
 }

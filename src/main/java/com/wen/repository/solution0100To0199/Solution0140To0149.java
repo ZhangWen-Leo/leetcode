@@ -134,6 +134,20 @@ public class Solution0140To0149 {
     }
 
     /**
+     * 144. Binary Tree Preorder Traversal
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+
+        if (root != null) {
+            list.add(root.val);
+            list.addAll(preorderTraversal(root.left));
+            list.addAll(preorderTraversal(root.right));
+        }
+        return list;
+    }
+
+    /**
      * 145. Binary Tree Postorder Traversal
      */
     List<Integer> postorderList;
