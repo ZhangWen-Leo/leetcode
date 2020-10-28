@@ -94,7 +94,7 @@ public class Solution0110To0119 {
             myConnect(root.right, level+1);
         }
     }
-    class Node {
+    private class Node {
         public int val;
         public Node left;
         public Node right;
