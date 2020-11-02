@@ -1,5 +1,7 @@
 package com.wen.repository.solution0300To0399;
 
+import java.util.*;
+
 public class Solution0340To0349 {
 
     /**
@@ -21,5 +23,34 @@ public class Solution0340To0349 {
         }
 
         return;
+    }
+
+    /**
+     * 349. Intersection of Two Arrays
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> list = new HashSet<>();
+
+        for (int num :
+                nums1) {
+            set.add(num);
+        }
+
+        for (int num :
+                nums2) {
+            if (set.contains(num)) {
+                list.add(num);
+            }
+        }
+
+        int[] result = new int[list.size()];
+        Iterator<Integer> iterator = list.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            result[i++] = iterator.next();
+        }
+
+        return result;
     }
 }

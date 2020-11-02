@@ -85,4 +85,32 @@ public class Solution0120To0129 {
         }
     }
 
+    /**
+     * 129. Sum Root to Leaf Numbers
+     */
+    private int sumOfNumbers = 0;
+    public int sumNumbers(TreeNode root) {
+        sumOfNumbers = 0;
+
+        if (root != null) {
+            sumNumbers(root, 0);
+        }
+
+        return sumOfNumbers;
+    }
+    private void sumNumbers(TreeNode root, int parent) {
+        int current = parent * 10 + root.val;
+        if (root.left == null && root.right == null) {
+            sumOfNumbers += current;
+        }
+        else {
+            if (root.left != null) {
+                sumNumbers(root.left, current);
+            }
+            if (root.right != null) {
+                sumNumbers(root.right, current);
+            }
+        }
+        return;
+    }
 }

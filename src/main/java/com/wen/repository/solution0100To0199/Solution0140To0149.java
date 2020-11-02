@@ -4,9 +4,50 @@ import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Solution0140To0149 {
+
+    /**
+     * 140. Word Break II
+     */
+    Set<String> wordSet;
+    List<String>[] wordResults;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        wordSet = new HashSet<>(wordDict);
+        wordResults = new List[s.length()];
+
+        return wordBreak(s, 0);
+    }
+    private List<String> wordBreak(String s, int start) {
+        if (wordResults[start] != null) {
+            return wordResults[start];
+        }
+        List<String> result = new ArrayList<>();
+
+        for (int i = start; i <= s.length(); i++) {
+            String subString = s.substring(start, i);
+            if (wordSet.contains(subString)) {
+                if (i == s.length()) {
+                    result.add(subString);
+                }
+                else {
+                    List<String> subWordResults = wordBreak(s, i);
+                    if (subWordResults.size() > 0) {
+                        for (String subWordResult :
+                                subWordResults) {
+                            result.add(subString + " " + subWordResult);
+                        }
+                    }
+                }
+            }
+        }
+
+        wordResults[start] = result;
+        return result;
+    }
 
     /**
      * 141. Linked List Cycle
@@ -169,4 +210,105 @@ public class Solution0140To0149 {
      *
      * 见design/LRUCache
      */
+
+    /**
+     * 148. Sort List
+     *
+     * The number of nodes in the list is in the range [0, 5 * 10^4].
+     * -10^5 <= Node.val <= 10^5
+     *
+     * 解法1
+     * 6 ms     37.41%
+     * 46.6 MB  5.04%
+     */
+    public ListNode sortList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        else if (head.next == null) {
+            return head;
+        }
+
+        ListNode slow = head, fast = head.next;
+
+        while (fast != null && (fast = fast.next) != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        ListNode p = slow.next;
+        slow.next = null;
+
+        return mergeList(sortList(head), sortList(p));
+    }
+    private ListNode mergeList(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+
+        ListNode p1 = l1, p2 = l2, p = head;
+        while (p1 != null && p2 != null) {
+            if (p1.val < p2.val) {
+                p.next = p1;
+                p1 = p1.next;
+            }
+            else {
+                p.next = p2;
+                p2 = p2.next;
+            }
+            p = p.next;
+        }
+        if (p1 == null) {
+            p.next = p2;
+        }
+        else {
+            p.next = p1;
+        }
+
+        return head.next;
+    }
+//    /**
+//     * 超时
+//     */
+//    public ListNode sortList(ListNode head) {
+//        if (head == null || head.next == null) {
+//            return head;
+//        }
+//
+//        return mySortList(head)[0];
+//    }
+//    public ListNode[] mySortList(ListNode head) {
+//        if (head == null || head.next == null) {
+//            return new ListNode[]{head, head};
+//        }
+//
+//        ListNode smallerAndSame = new ListNode(0), sTail = smallerAndSame;
+//        ListNode bigger = new ListNode(0), bTail = bigger;
+//
+//        for (ListNode p = head.next; p != null; p = p.next) {
+//            if (p.val <= head.val) {
+//                sTail.next = p;
+//                sTail = sTail.next;
+//            }
+//            else {
+//                bTail.next = p;
+//                bTail = bTail.next;
+//            }
+//        }
+//        sTail.next = null;
+//        bTail.next = null;
+//
+//        ListNode[] smallerSort = mySortList(smallerAndSame.next);
+//        ListNode[] biggerSort = mySortList(bigger.next);
+//
+//        if (smallerSort[0] == null) {
+//            head.next = biggerSort[0];
+//            return new ListNode[]{head, biggerSort[1]};
+//        }
+//        else {
+//            smallerSort[1].next = head;
+//            head.next = biggerSort[0];
+//            return new ListNode[]{smallerSort[0], biggerSort[1] == null ? head : biggerSort[1]};
+//        }
+//    }
+
+
 }

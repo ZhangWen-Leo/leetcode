@@ -8,6 +8,48 @@ import java.util.Stack;
 public class Solution0230To0239 {
 
     /**
+     * 233. Number of Digit One
+     */
+    public int countDigitOne(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+        if (n < 10) {
+            return 1;
+        }
+
+        int length = 2, x = n / 100;
+        while (x > 0) {
+            x /= 10;
+            length++;
+        }
+
+        int[] pre = new int[length - 1];
+        pre[0] = 1;
+
+        for (int i = 1; i < length - 1; i++) {
+            pre[i] = (int) Math.pow(10, i);
+            pre[i] += 10 * pre[i-1];
+        }
+
+        int result = 0;
+
+        int a = n / (int) Math.pow(10, length - 1);
+        int b = n % (int) Math.pow(10, length - 1);
+
+        if (a > 1) {
+            result += (int) Math.pow(10, length - 1);
+        }
+        else {
+            result += b + 1;
+        }
+        result += a * pre[length - 2];
+        result += countDigitOne(b);
+
+        return result;
+    }
+
+    /**
      * 234. Palindrome Linked List
      */
     public boolean isPalindrome(ListNode head) {

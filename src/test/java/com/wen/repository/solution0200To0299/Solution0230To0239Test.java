@@ -23,4 +23,9 @@ public class Solution0230To0239Test {
 
         System.out.println(solution.lowestCommonAncestor(t9, t7, t8));
     }
+
+    @Test
+    public void countDigitOne() {
+        System.out.println(solution.countDigitOne(125));
+    }
 }
