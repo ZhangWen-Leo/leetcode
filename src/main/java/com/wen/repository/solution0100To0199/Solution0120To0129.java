@@ -50,6 +50,79 @@ public class Solution0120To0129 {
     }
 
     /**
+     * 127. Word Ladder
+     *
+     * TODO
+     */
+    private int[] ladderDp;
+    private int[][] transDp;
+    private List<String> ladderWords;
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        ladderDp = new int[wordList.size()+1];
+        transDp = new int[wordList.size()+1][wordList.size()+1];
+        ladderWords = wordList;
+        wordList.add(0, beginWord);
+
+        int result = getLadderOn(0, endWord);
+        return result == -1 ? 0 : result;
+    }
+    private int getLadderOn(int index, String target) {
+        if (ladderDp[index] != 0) {
+            return ladderDp[index];
+        }
+        else if (ladderWords.get(index).equals(target)) {
+            ladderDp[index] = 1;
+            return 1;
+        }
+
+        int min = Integer.MAX_VALUE;
+        ladderDp[index] = Integer.MAX_VALUE - 1;
+        for (int i = 0; i < ladderWords.size(); i++) {
+            if (transString(i, index)) {
+                int ladder = getLadderOn(i, target);
+                if (ladder >= 0) {
+                    min = Integer.min(min, ladder + 1);
+                }
+            }
+        }
+
+        if (min == Integer.MAX_VALUE) {
+            ladderDp[index] = -1;
+            return -1;
+        }
+        else {
+            ladderDp[index] = min;
+            return min;
+        }
+    }
+    private boolean transString(int a, int b) {
+        if (transDp[a][b] != 0) {
+            return transDp[a][b] == 1;
+        }
+        String stringA = ladderWords.get(a), stringB = ladderWords.get(b);
+        if (stringA.length() != stringB.length()) {
+            transDp[a][b] = -1;
+            return false;
+        }
+
+        int count = 0;
+        for (int i = 0; i < stringA.length(); i++) {
+            if (stringA.charAt(i) != stringB.charAt(i)) {
+                count++;
+            }
+        }
+
+        if (count == 1) {
+            transDp[a][b] = 1;
+            return true;
+        }
+        else {
+            transDp[a][b] = -1;
+            return false;
+        }
+    }
+
+    /**
      * 128. Longest Consecutive Sequence
      *
      * 0 <= nums.length <= 10^4
