@@ -14,3 +14,4 @@
 3. [315. Count of Smaller Numbers After Self](solution0300To0399/Solution0310To0319.java)
 4. [336. Palindrome Pairs](solution0300To0399/Solution0330To0339.java)
 5. [354. Russian Doll Envelopes](solution0300To0399/Solution0350To0359.java)
+6. [358. Rearrange String k Distance Apart](solution0300To0399/Solution0350To0359.java)

@@ -18,4 +18,11 @@ public class Solution0350To0359Test {
         };
         System.out.println(solution.maxEnvelopes(envelopes));
     }
+
+    @Test
+    public void rearrangeString() {
+        String a = "aaabc";
+
+        System.out.println(solution.rearrangeString(a, 3));
+    }
 }

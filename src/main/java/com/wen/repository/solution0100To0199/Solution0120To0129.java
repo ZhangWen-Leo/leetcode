@@ -7,6 +7,33 @@ import java.util.*;
 public class Solution0120To0129 {
 
     /**
+     * 122. Best Time to Buy and Sell Stock II
+     *
+     * 1 <= prices.length <= 3 * 10 ^ 4
+     * 0 <= prices[i] <= 10 ^ 4
+     */
+    public int maxProfit(int[] prices) {
+        int result = 0;
+        boolean hold = false;
+
+        for (int i = 0; i < prices.length-1; i++) {
+            if (!hold && prices[i+1] > prices[i]) {
+                result -= prices[i];
+                hold = true;
+            }
+            else if (hold && prices[i+1] < prices[i]) {
+                result += prices[i];
+                hold = false;
+            }
+        }
+        if (hold) {
+            result += prices[prices.length-1];
+        }
+
+        return result;
+    }
+
+    /**
      * 124. Binary Tree Maximum Path Sum
      *
      * The number of nodes in the tree is in the range [0, 3 * 104].
@@ -52,7 +79,8 @@ public class Solution0120To0129 {
     /**
      * 127. Word Ladder
      *
-     * TODO
+     * 2368ms   5.03%
+     * 可优化 TODO
      */
     private int[] ladderDp;
     private int[][] transDp;
@@ -63,37 +91,29 @@ public class Solution0120To0129 {
         ladderWords = wordList;
         wordList.add(0, beginWord);
 
-        int result = getLadderOn(0, endWord);
-        return result == -1 ? 0 : result;
-    }
-    private int getLadderOn(int index, String target) {
-        if (ladderDp[index] != 0) {
-            return ladderDp[index];
+        Queue<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < ladderWords.size(); i++) {
+            if (ladderWords.get(i).equals(endWord)) {
+                ladderDp[i] = 1;
+                queue.offer(new int[]{i, 1});
+                break;
+            }
         }
-        else if (ladderWords.get(index).equals(target)) {
-            ladderDp[index] = 1;
-            return 1;
+        if (queue.isEmpty()) {
+            return 0;
         }
 
-        int min = Integer.MAX_VALUE;
-        ladderDp[index] = Integer.MAX_VALUE - 1;
-        for (int i = 0; i < ladderWords.size(); i++) {
-            if (transString(i, index)) {
-                int ladder = getLadderOn(i, target);
-                if (ladder >= 0) {
-                    min = Integer.min(min, ladder + 1);
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            for (int i = 0; i < wordList.size(); i++) {
+                if (ladderDp[i] == 0 && transString(i, current[0])) {
+                    ladderDp[i] = current[1] + 1;
+                    queue.offer(new int[]{i, ladderDp[i]});
                 }
             }
         }
 
-        if (min == Integer.MAX_VALUE) {
-            ladderDp[index] = -1;
-            return -1;
-        }
-        else {
-            ladderDp[index] = min;
-            return min;
-        }
+        return ladderDp[0];
     }
     private boolean transString(int a, int b) {
         if (transDp[a][b] != 0) {
@@ -102,6 +122,7 @@ public class Solution0120To0129 {
         String stringA = ladderWords.get(a), stringB = ladderWords.get(b);
         if (stringA.length() != stringB.length()) {
             transDp[a][b] = -1;
+            transDp[b][a] = -1;
             return false;
         }
 
@@ -114,10 +135,12 @@ public class Solution0120To0129 {
 
         if (count == 1) {
             transDp[a][b] = 1;
+            transDp[b][a] = -1;
             return true;
         }
         else {
             transDp[a][b] = -1;
+            transDp[b][a] = -1;
             return false;
         }
     }

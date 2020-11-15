@@ -1,6 +1,35 @@
 package com.wen.repository.solution0300To0399;
 
+import com.wen.dataStructure.ListNode;
+
 public class Solution0320To0329 {
+
+    /**
+     * 328. Odd Even Linked List
+     */
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode oddTail = head,
+                evenTail = head.next,
+                oddHead = head,
+                evenHead = head.next;
+        while (oddTail != null && evenTail != null) {
+            if (evenTail.next == null) {
+                break;
+            }
+
+            oddTail.next = evenTail.next;
+            oddTail = oddTail.next;
+            evenTail.next = oddTail.next;
+            evenTail = evenTail.next;
+        }
+
+        oddTail.next = evenHead;
+        return oddHead;
+    }
 
     /**
      * 329. Longest Increasing Path in a Matrix
