@@ -1,6 +1,70 @@
 package com.wen.repository.solution0100To0199;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution0130To0139 {
+
+    /**
+     * 134. Gas Station
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int length = gas.length;
+        List<Integer> surplus = new ArrayList<>(length);
+
+        for (int i = 0; i < length; i++) {
+            surplus.add(gas[i] - cost[i]);
+        }
+
+        return calculateNeed(surplus);
+    }
+    private int calculateNeed(List<Integer> surplus) {
+        if (surplus.size() == 1) {
+            return surplus.get(0) >= 0 ? 0 : -1;
+        }
+        List<Integer> compress = new ArrayList<>();
+        List<Integer> headIndex = new ArrayList<>();
+        int length = surplus.size();
+
+        int start = 0;
+        while (start < length && surplus.get(start) <= 0) {
+            start++;
+        }
+        if (start == length) {
+            return -1;
+        }
+        headIndex.add(start);
+
+        int i = start;
+        while (i < length) {
+            while (i < length && surplus.get(i) >= 0) {
+                i++;
+            }
+            while (i < length && surplus.get(i) <= 0) {
+                i++;
+            }if (i < length) {
+                headIndex.add(i);
+            }
+        }
+
+        for (int j = 0; j < headIndex.size(); j++) {
+            int current = 0;
+            int k = headIndex.get(j);
+            do {
+                current += surplus.get(k);
+                k = (k + 1) % length;
+            } while (k != headIndex.get((j+1) % headIndex.size()));
+            compress.add(current);
+        }
+
+        int result = calculateNeed(compress);
+        if (result >= 0) {
+            return headIndex.get(result);
+        }
+        else {
+            return -1;
+        }
+    }
 
     /**
      * 135. Candy

@@ -2,6 +2,8 @@ package com.wen.repository.solution0400To0499;
 
 import com.wen.dataStructure.TreeNode;
 
+import java.util.*;
+
 public class Solution0400To0410 {
 
     /**
@@ -99,5 +101,33 @@ public class Solution0400To0410 {
             }
         }
         return sum;
+    }
+
+    /**
+     * 406. Queue Reconstruction by Height
+     */
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] == o2[0]) {
+                    return o1[1] - o2[1];
+                }
+                else {
+                    return o2[0] - o1[0];
+                }
+            }
+        });
+
+        int i = 0, length = people.length;
+        List<int[]> result = new LinkedList<>();
+        while (i < length) {
+            int[] currentPerson = people[i];
+
+            result.add(currentPerson[1], currentPerson);
+            i++;
+        }
+
+        return result.toArray(people);
     }
 }

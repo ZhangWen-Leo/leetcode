@@ -15,4 +15,18 @@ public class Solution0400To0410Test {
 
         System.out.println(solution.removeKdigits(num, k));
     }
+
+    @Test
+    public void reconstructQueue() {
+        int[][] people = {
+                {7,0},
+                {4,4},
+                {7,1},
+                {5,0},
+                {6,1},
+                {5,2}
+        };
+
+        System.out.println(solution.reconstructQueue(people));
+    }
 }

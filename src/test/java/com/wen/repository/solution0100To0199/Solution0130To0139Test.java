@@ -15,4 +15,11 @@ public class Solution0130To0139Test {
         };
         System.out.println(solution.candy(ratings));
     }
+
+    @Test
+    public void canCompleteCircuit() {
+        int[] gas = {2,3,4};
+        int[] cost = {3,4,3};
+        System.out.println(solution.canCompleteCircuit(gas, cost));
+    }
 }
