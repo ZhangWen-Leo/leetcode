@@ -2,7 +2,63 @@ package com.wen.repository.solution0001To0099;
 
 import com.wen.dataStructure.ListNode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Solution0090To0099 {
+
+    /**
+     * 90. Subsets II
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> indexes = new ArrayList<>();
+        result.add(getListFromIndex(nums, indexes));
+
+        indexes.add(0);
+        result.add(getListFromIndex(nums, indexes));
+        while (true) {
+            int i = indexes.get(indexes.size()-1);
+            if (i < nums.length-1) {
+                indexes.add(i+1);
+                result.add(getListFromIndex(nums, indexes));
+            }
+            else {
+                indexes.remove(indexes.size()-1);
+                if (indexes.isEmpty()) {
+                    break;
+                }
+                i = indexes.get(indexes.size()-1);
+                int j = i+1;
+                while (j < nums.length && nums[j] == nums[i]) {
+                    j++;
+                }
+                if (j < nums.length) {
+                    indexes.remove(indexes.size()-1);
+                    indexes.add(j);
+                    result.add(getListFromIndex(nums, indexes));
+                }
+                else {
+                    indexes.remove(indexes.size()-1);
+                    indexes.add(nums.length-1);
+                }
+            }
+        }
+
+        return result;
+    }
+    private List<Integer> getListFromIndex(int[] nums, List<Integer> indexes) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int index :
+                indexes) {
+            list.add(nums[index]);
+        }
+
+        return list;
+    }
 
     /**
      * 92. Reverse Linked List II

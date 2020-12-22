@@ -1,5 +1,6 @@
 package com.wen.repository.solution0900To0999;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -47,6 +48,72 @@ public class Solution0970To0979 {
     }
     private int sumOfSquares(int a, int b) {
         return a * a + b * b;
+    }
+
+    /**
+     * 976. Largest Perimeter Triangle
+     *
+     * 3 <= A.length <= 10000
+     * 1 <= A[i] <= 10^6
+     *
+     * 9ms  82%
+     */
+    public int largestPerimeter(int[] A) {
+        if (A.length < 3) {
+            return 0;
+        }
+
+        Arrays.sort(A);
+        int i = A.length-1;
+        int a = A[i--], b = A[i--], c;
+        while (i >= 0) {
+            c = A[i--];
+            if (a < b + c) {
+                return a + b + c;
+            }
+            else {
+                a = b;
+                b = c;
+            }
+        }
+
+        return 0;
+    }
+    /**
+     * 解法2
+     *
+     * 10ms 24%
+     */
+    public int largestPerimeter1(int[] A) {
+        if (A.length < 3) {
+            return 0;
+        }
+        Queue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        for (int length :
+                A) {
+            queue.offer(length);
+        }
+
+        int a, b, c;
+        a = queue.poll();
+        b = queue.poll();
+        while (!queue.isEmpty()) {
+            c = queue.poll();
+            if (a < b + c) {
+                return a + b + c;
+            }
+            else {
+                a = b;
+                b = c;
+            }
+        }
+
+        return 0;
     }
 
     /**

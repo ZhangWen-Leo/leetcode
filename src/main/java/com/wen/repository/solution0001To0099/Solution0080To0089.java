@@ -248,4 +248,29 @@ public class Solution0080To0089 {
             return less.next;
         }
     }
+
+    /**
+     * 89. Gray Code
+     */
+    public List<Integer> grayCode(int n) {
+        List<Integer> result = new ArrayList<>();
+
+        if (n == 0) {
+            result.add(0);
+        }
+        else if (n == 1) {
+            result.add(0);
+            result.add(1);
+        }
+        else {
+            List<Integer> subList = grayCode(n-1);
+            result.addAll(subList);
+            int add = (int) Math.pow(2, n-1);
+            for (int i = subList.size()-1; i >= 0; i--) {
+                result.add(add + subList.get(i));
+            }
+        }
+
+        return result;
+    }
 }

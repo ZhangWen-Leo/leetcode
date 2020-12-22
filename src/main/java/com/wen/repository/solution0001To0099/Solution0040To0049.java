@@ -421,4 +421,31 @@ public class Solution0040To0049 {
             y = newY;
         }
     }
+
+    /**
+     * 49. Group Anagrams
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> result = new ArrayList<>();
+        Map<Integer, Map<Character, Integer>> sets = new HashMap<>();
+        Map<Integer, Integer> indexMap = new HashMap<>();
+
+        for (int i = 0; i < strs.length; i++) {
+            String str = strs[i];
+            Map<Character, Integer> map = new HashMap<>();
+            for (int j = 0; j < str.length(); j++) {
+                map.put(str.charAt(j), map.getOrDefault(str.charAt(j), 0) + 1);
+            }
+
+            int index = map.hashCode();
+            if (sets.get(index) == null) {
+                result.add(new ArrayList<>());
+                sets.put(index, map);
+                indexMap.put(index, result.size() - 1);
+            }
+            result.get(indexMap.get(index)).add(str);
+        }
+
+        return result;
+    }
 }

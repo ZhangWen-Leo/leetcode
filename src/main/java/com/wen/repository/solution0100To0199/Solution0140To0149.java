@@ -212,6 +212,28 @@ public class Solution0140To0149 {
      */
 
     /**
+     * 147. Insertion Sort List
+     */
+    public ListNode insertionSortList(ListNode head) {
+        ListNode sentry = new ListNode(0);
+        ListNode current, next = head;
+
+        while (next != null) {
+            current = next;
+            next = next.next;
+            ListNode insertPoint = sentry;
+
+            while (insertPoint.next != null && current.val >= insertPoint.next.val) {
+                insertPoint = insertPoint.next;
+            }
+            current.next = insertPoint.next;
+            insertPoint.next = current;
+        }
+
+        return sentry.next;
+    }
+
+    /**
      * 148. Sort List
      *
      * The number of nodes in the list is in the range [0, 5 * 10^4].
