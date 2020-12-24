@@ -48,4 +48,12 @@ public class CommonTest {
         TreeNode t = TreeNode.buildTree(new Integer[]{1,0,10,null,null,4});
         System.out.println(t);
     }
+
+    @Test
+    public void testForString() {
+        String a = "helo";
+        String b = a;
+        b = "1" + b;
+        System.out.println(a);
+    }
 }
