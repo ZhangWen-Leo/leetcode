@@ -7,12 +7,55 @@ import java.util.*;
 public class Solution0120To0129 {
 
     /**
+     * 120. Triangle
+     *
+     * 1 <= triangle.length <= 200
+     * triangle[0].length == 1
+     * triangle[i].length == triangle[i - 1].length + 1
+     * -104 <= triangle[i][j] <= 104
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        List<Integer> list = new ArrayList<>(triangle.get(triangle.size()-1));
+
+        int i = triangle.size() - 2;
+        while (i >= 0) {
+            for (int j = 0; j < list.size() - 1; j++) {
+                list.set(j, Math.min(list.get(j), list.get(j+1)) + triangle.get(i).get(j));
+            }
+            list.remove(list.size()-1);
+            i--;
+        }
+
+        return list.get(0);
+    }
+
+    /**
+     * 121. Best Time to Buy and Sell Stock
+     */
+    public int maxProfit121(int[] prices) {
+        int lowest, max;
+        lowest = Integer.MAX_VALUE;
+        max = 0;
+        for (int price :
+                prices) {
+            if (price < lowest) {
+                lowest = price;
+            }
+            if (price - lowest > max) {
+                max = price - lowest;
+            }
+        }
+
+        return max;
+    }
+
+    /**
      * 122. Best Time to Buy and Sell Stock II
      *
      * 1 <= prices.length <= 3 * 10 ^ 4
      * 0 <= prices[i] <= 10 ^ 4
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfit122(int[] prices) {
         int result = 0;
         boolean hold = false;
 
@@ -31,6 +74,42 @@ public class Solution0120To0129 {
         }
 
         return result;
+    }
+
+    /**
+     * 123. Best Time to Buy and Sell Stock III
+     */
+    public int maxProfit(int[] prices) {
+        int length = prices.length;
+        int[] profitDp = new int[length+1];
+        profitDp[length]= 0;
+        profitDp[length-1] = 0;
+        int highest = prices[length-1];
+        for (int i = length - 2; i >= 0; i--) {
+            if (prices[i] > highest) {
+                profitDp[i] = profitDp[i+1];
+                highest = prices[i];
+            }
+            else if (highest - prices[i] > profitDp[i+1]) {
+                profitDp[i] = highest - prices[i];
+            }
+            else {
+                profitDp[i] = profitDp[i+1];
+            }
+        }
+
+        int lowest = Integer.MAX_VALUE, max = 0;
+        for (int i = 0; i < length; i++) {
+            if (prices[i] < lowest) {
+                lowest = prices[i];
+            }
+            int profit = prices[i] - lowest + profitDp[i+1];
+            if (profit > max) {
+                max = profit;
+            }
+        }
+
+        return max;
     }
 
     /**
@@ -74,6 +153,38 @@ public class Solution0120To0129 {
             }
         }
         return result;
+    }
+
+    /**
+     * 125. Valid Palindrome
+     */
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase();
+
+        int i = 0, j = s.length()-1;
+        while (true) {
+            while (i < j && !Character.isAlphabetic(s.charAt(i)) && !Character.isDigit(s.charAt(i))) {
+                i++;
+            }
+            if (i >= j) {
+                return true;
+            }
+
+            while (i < j && !Character.isAlphabetic(s.charAt(j)) && !Character.isDigit(s.charAt(j))) {
+                j--;
+            }
+            if (i >= j) {
+                return true;
+            }
+
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            else {
+                i++;
+                j--;
+            }
+        }
     }
 
     /**

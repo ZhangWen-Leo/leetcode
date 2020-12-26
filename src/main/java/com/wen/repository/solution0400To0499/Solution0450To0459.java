@@ -1,5 +1,6 @@
 package com.wen.repository.solution0400To0499;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,5 +34,33 @@ public class Solution0450To0459 {
         }
 
         return count;
+    }
+
+    /**
+     * 455. Assign Cookies
+     *
+     * 1 <= g.length <= 3 * 10^4
+     * 0 <= s.length <= 3 * 10^4
+     * 1 <= g[i], s[j] <= 2^31 - 1
+     */
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+
+        int i = 0, j = 0;
+        while (i < g.length) {
+            while (j < s.length && g[i] > s[j]) {
+                j++;
+            }
+            if (j < s.length) {
+                i++;
+                j++;
+            }
+            else {
+                break;
+            }
+        }
+
+        return i;
     }
 }

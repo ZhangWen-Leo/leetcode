@@ -6,6 +6,62 @@ import java.util.List;
 public class Solution0130To0139 {
 
     /**
+     * 130. Surrounded Regions
+     */
+    private boolean[][] checked;
+    private char[][] board;
+    public void solve(char[][] board) {
+        if (board.length == 0 || board[0].length == 0) {
+            return;
+        }
+        int x = board.length, y = board[0].length;
+        checked = new boolean[x][y];
+        this.board = board;
+
+        for (int i = 0; i < x; i++) {
+            if (board[i][0] == 'O' && !checked[i][0]) {
+                check(i, 0);
+            }
+            if (board[i][y-1] == 'O' && !checked[i][y-1]) {
+                check(i, y-1);
+            }
+        }
+        for (int i = 0; i < y; i++) {
+            if (board[0][i] == 'O' && !checked[0][i]) {
+                check(0, i);
+            }
+            if (board[x-1][i] == 'O' && !checked[x-1][i]) {
+                check(x-1, i);
+            }
+        }
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if (!checked[i][j]) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+        return;
+    }
+    private void check(int i, int j) {
+        int x = board.length, y = board[0].length;
+        checked[i][j] = true;
+        if (i > 0 && !checked[i-1][j] && board[i-1][j] == 'O') {
+            check(i-1, j);
+        }
+        if (i < x-1 && !checked[i+1][j] && board[i+1][j] == 'O') {
+            check(i+1, j);
+        }
+        if (j > 0 && !checked[i][j-1] && board[i][j-1] == 'O') {
+            check(i, j-1);
+        }
+        if (j < y-1 && !checked[i][j+1] && board[i][j+1] == 'O') {
+            check(i, j+1);
+        }
+    }
+
+    /**
      * 134. Gas Station
      */
     public int canCompleteCircuit(int[] gas, int[] cost) {
