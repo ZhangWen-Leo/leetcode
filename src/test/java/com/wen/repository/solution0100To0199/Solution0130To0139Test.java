@@ -2,7 +2,8 @@ package com.wen.repository.solution0100To0199;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution0130To0139Test {
 
@@ -22,6 +23,12 @@ public class Solution0130To0139Test {
     }
 
     @Test
+    public void partition() {
+        String s = "aab";
+        System.out.println(solution.partition(s));
+    }
+
+    @Test
     public void candy() {
         int[] ratings = {
                 1,3,2,2,1
@@ -34,5 +41,15 @@ public class Solution0130To0139Test {
         int[] gas = {2,3,4};
         int[] cost = {3,4,3};
         System.out.println(solution.canCompleteCircuit(gas, cost));
+    }
+
+    @Test
+    public void wordBreak() {
+        String s = "leetcode";
+        List<String> wordDict = new ArrayList<>();
+        wordDict.add("leet");
+        wordDict.add("code");
+
+        System.out.println(solution.wordBreak(s, wordDict));
     }
 }

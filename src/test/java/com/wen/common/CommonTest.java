@@ -56,4 +56,11 @@ public class CommonTest {
         b = "1" + b;
         System.out.println(a);
     }
+
+    @Test
+    public void testForArray() {
+        int[] a = {1, 2};
+        int[] b = {1, 2};
+        System.out.println(a.equals(b));
+    }
 }

@@ -3,6 +3,8 @@ package com.wen.repository.solution0200To0299;
 import com.wen.dataStructure.TreeNode;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class Solution0230To0239Test {
@@ -27,5 +29,12 @@ public class Solution0230To0239Test {
     @Test
     public void countDigitOne() {
         System.out.println(solution.countDigitOne(125));
+    }
+
+    @Test
+    public void maxSlidingWindow() {
+        int[] nums = {9,10,9,-7,-4,-8,2,-6};
+        int k = 5;
+        System.out.println(Arrays.toString(solution.maxSlidingWindow(nums, k)));
     }
 }

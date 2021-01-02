@@ -3,51 +3,104 @@ package com.wen.repository.solution0100To0199;
 import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Solution0140To0149 {
 
     /**
      * 140. Word Break II
+     *
+     * 解法2
+     * 8ms  43.31%
      */
-    Set<String> wordSet;
-    List<String>[] wordResults;
+    private List<String>[] wordBreakResultDp;
     public List<String> wordBreak(String s, List<String> wordDict) {
-        wordSet = new HashSet<>(wordDict);
-        wordResults = new List[s.length()];
-
-        return wordBreak(s, 0);
-    }
-    private List<String> wordBreak(String s, int start) {
-        if (wordResults[start] != null) {
-            return wordResults[start];
+        wordBreakResultDp = new List[s.length()+1];
+        wordBreakResultDp[s.length()] = new ArrayList<>();
+        wordBreakResultDp[s.length()].add("");
+        int maxLength = 0;
+        for (String str :
+                wordDict) {
+            maxLength = Math.max(maxLength, str.length());
         }
-        List<String> result = new ArrayList<>();
 
-        for (int i = start; i <= s.length(); i++) {
-            String subString = s.substring(start, i);
-            if (wordSet.contains(subString)) {
-                if (i == s.length()) {
-                    result.add(subString);
-                }
-                else {
-                    List<String> subWordResults = wordBreak(s, i);
-                    if (subWordResults.size() > 0) {
-                        for (String subWordResult :
-                                subWordResults) {
-                            result.add(subString + " " + subWordResult);
+        return wordBreak(s, 0, wordDict, maxLength);
+    }
+    private List<String> wordBreak(String s, int start, List<String> wordDict, int maxLength) {
+        if (start >= s.length()) {
+            return wordBreakResultDp[s.length()];
+        }
+        if (wordBreakResultDp[start] != null) {
+            return wordBreakResultDp[start];
+        }
+        wordBreakResultDp[start] = new ArrayList<>();
+
+        boolean[] lossChance = new boolean[wordDict.size()];
+        for (int i = 0; start + i < s.length() && i < maxLength; i++) {
+            char c = s.charAt(start+i);
+            for (int j = 0; j < wordDict.size(); j++) {
+                if (!lossChance[j]) {
+                    if (c == wordDict.get(j).charAt(i)) {
+                        if (i == wordDict.get(j).length() - 1) {
+                            List<String> subResult = wordBreak(s, start + i + 1, wordDict, maxLength);
+                            for (String subString :
+                                    subResult) {
+                                wordBreakResultDp[start].add(
+                                        wordDict.get(j) + (subString.equals("") ? "" : " " + subString)
+                                );
+                            }
+                            lossChance[j] = true;
                         }
+                    }
+                    else {
+                        lossChance[j] = true;
                     }
                 }
             }
         }
 
-        wordResults[start] = result;
-        return result;
+        return wordBreakResultDp[start];
     }
+    /**
+     * 解法1
+     *
+     * 10ms 27.1%
+     */
+//    Set<String> wordSet;
+//    List<String>[] wordResults;
+//    public List<String> wordBreak(String s, List<String> wordDict) {
+//        wordSet = new HashSet<>(wordDict);
+//        wordResults = new List[s.length()];
+//
+//        return wordBreak(s, 0);
+//    }
+//    private List<String> wordBreak(String s, int start) {
+//        if (wordResults[start] != null) {
+//            return wordResults[start];
+//        }
+//        List<String> result = new ArrayList<>();
+//
+//        for (int i = start; i <= s.length(); i++) {
+//            String subString = s.substring(start, i);
+//            if (wordSet.contains(subString)) {
+//                if (i == s.length()) {
+//                    result.add(subString);
+//                }
+//                else {
+//                    List<String> subWordResults = wordBreak(s, i);
+//                    if (subWordResults.size() > 0) {
+//                        for (String subWordResult :
+//                                subWordResults) {
+//                            result.add(subString + " " + subWordResult);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        wordResults[start] = result;
+//        return result;
+//    }
 
     /**
      * 141. Linked List Cycle
@@ -332,5 +385,52 @@ public class Solution0140To0149 {
 //        }
 //    }
 
+    /**
+     * 149. Max Points on a Line
+     *
+     * TODO
+     */
+    public int maxPoints(int[][] points) {
+        if (points.length == 1) {
+            return 1;
+        }
+        Map<Double, Map<Double, Integer>> kMap = new HashMap<>();
+
+        for (int i = 0; i < points.length-1; i++) {
+            for (int j = i+1; j < points.length; j++) {
+                if (points[i][0] == points[j][0] && points[i][1] == points[j][1]) {
+                    continue;
+                }
+                Double k = ((double) (points[j][1] - points[i][1])) / (points[j][0] - points[i][0]);
+                Double b = points[i][1] - points[i][0] * k;
+
+                if (kMap.containsKey(k)) {
+                    Map<Double, Integer> bMap = kMap.get(k);
+                    bMap.put(b, 0);
+                }
+                else {
+                    Map<Double, Integer> bMap = new HashMap<>();
+                    bMap.put(b, 0);
+                    kMap.put(k, bMap);
+                }
+            }
+        }
+
+        int max = 0;
+        for (int i = 0; i < points.length; i++) {
+            for (Map.Entry<Double, Map<Double, Integer>> kEntry :
+                    kMap.entrySet()) {
+                for (Map.Entry<Double, Integer> bEntry :
+                        kEntry.getValue().entrySet()) {
+                    if (bEntry.getKey() == points[i][1] - points[i][0] * kEntry.getKey()) {
+                        bEntry.setValue(bEntry.getValue()+1);
+                        max = Math.max(max, bEntry.getValue());
+                    }
+                }
+            }
+        }
+
+        return max;
+    }
 
 }

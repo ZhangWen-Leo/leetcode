@@ -3,6 +3,9 @@ package com.wen.repository.solution0200To0299;
 import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Stack;
 
 public class Solution0230To0239 {
@@ -172,6 +175,38 @@ public class Solution0230To0239 {
                     break;
                 }
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * 239. Sliding Window Maximum
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int start = 0, end = k;
+        int[] result = new int[nums.length - k + 1];
+        LinkedList<int[]> goDown = new LinkedList<>();
+
+        for (int i = start; i < end-1; i++) {
+            while (!goDown.isEmpty() && goDown.getLast()[0] < nums[i]) {
+                goDown.removeLast();
+            }
+            goDown.offer(new int[]{nums[i], i});
+        }
+        while (end <= nums.length) {
+            while (!goDown.isEmpty() && goDown.getLast()[0] < nums[end-1]) {
+                goDown.removeLast();
+            }
+            goDown.offer(new int[]{nums[end-1], end-1});
+
+            result[start] = goDown.get(0)[0];
+
+            if (goDown.get(0)[1] == start) {
+                goDown.removeFirst();
+            }
+            start++;
+            end++;
         }
 
         return result;
