@@ -4,7 +4,9 @@ import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.Stack;
 
 public class CommonTest {
@@ -62,5 +64,21 @@ public class CommonTest {
         int[] a = {1, 2};
         int[] b = {1, 2};
         System.out.println(a.equals(b));
+    }
+
+    @Test
+    public void testForSet() {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        Set<Integer> set3 = new HashSet<>();
+        Set<Set> sets = new HashSet<>();
+        set1.add(1);
+        set2.add(2);
+        set3.add(3);
+        sets.add(set1);
+        sets.add(set2);
+        sets.add(set3);
+        sets.remove(set2);
+        return;
     }
 }

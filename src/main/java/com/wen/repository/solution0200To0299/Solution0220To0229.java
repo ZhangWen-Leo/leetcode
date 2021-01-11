@@ -61,4 +61,30 @@ public class Solution0220To0229 {
 
         return root;
     }
+
+    /**
+     * 228. Summary Ranges
+     */
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<>();
+        int start = 0;
+        while (start < nums.length) {
+            int end = start + 1;
+            while (end < nums.length) {
+                if (nums[end] != nums[end-1] + 1) {
+                    break;
+                }
+                end++;
+            }
+            if (nums[end-1] == nums[start]) {
+                result.add("" + nums[start]);
+            }
+            else {
+                result.add(nums[start] + "->" + nums[end-1]);
+            }
+            start = end;
+        }
+
+        return result;
+    }
 }

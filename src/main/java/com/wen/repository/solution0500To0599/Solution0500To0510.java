@@ -55,4 +55,21 @@ public class Solution0500To0510 {
         lastNum = root.val;
         inOrderSearch(root.right);
     }
+
+    /**
+     * 509. Fibonacci Number
+     */
+    public int fib(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        int a = 0, b = 1, temp;
+        while (n-- > 2) {
+            temp = a + b;
+            a = b;
+            b = temp;
+        }
+
+        return a + b;
+    }
 }
