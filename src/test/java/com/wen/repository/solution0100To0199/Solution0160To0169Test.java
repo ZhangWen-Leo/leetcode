@@ -12,4 +12,9 @@ public class Solution0160To0169Test {
     public void fractionToDecimal() {
         System.out.println(solution.fractionToDecimal(-1, -2147483648));
     }
+
+    @Test
+    public void convertToTitle() {
+        System.out.println(solution.convertToTitle(52));
+    }
 }

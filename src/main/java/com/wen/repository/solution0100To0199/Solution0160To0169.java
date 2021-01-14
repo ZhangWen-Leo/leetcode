@@ -257,4 +257,63 @@ public class Solution0160To0169 {
 
         return result.toString();
     }
+
+    /**
+     * 167. Two Sum II - Input array is sorted
+     */
+    public int[] twoSum(int[] numbers, int target) {
+        int i = 0, j = numbers.length-1;
+        while (i < j) {
+            if (numbers[i] + numbers[j] > target) {
+                j--;
+            }
+            else if (numbers[i] + numbers[j] < target) {
+                i++;
+            }
+            else {
+                return new int[]{i+1, j+1};
+            }
+        }
+
+        return new int[0];
+    }
+
+    /**
+     * 168. Excel Sheet Column Title
+     */
+    public String convertToTitle(int n) {
+        StringBuilder result = new StringBuilder();
+        while (n > 0) {
+            int x = n % 26;
+            if (x == 0) {
+                result.insert(0, 'Z');
+            }
+            else {
+                result.insert(0, (char) ('A' + x - 1));
+            }
+
+            n = (n-1) / 26;
+        }
+        return result.toString();
+    }
+
+    /**
+     * 169. Majority Element
+     */
+    public int majorityElement(int[] nums) {
+        int num = nums[0], count = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (num == nums[i]) {
+                count++;
+            }
+            else {
+                if (count == 1) {
+                    num = nums[i];
+                    continue;
+                }
+                count--;
+            }
+        }
+        return num;
+    }
 }

@@ -45,6 +45,13 @@ public class Solution1200To1209 {
     }
 
     /**
+     * 1203. Sort Items by Groups Respecting Dependencies
+     */
+    public int[] sortItems(int n, int m, int[] group, List<List<Integer>> beforeItems) {
+        return null;
+    }
+
+    /**
      * 1207. Unique Number of Occurrences
      * 1 <= arr.length <= 1000
      * -1000 <= arr[i] <= 1000

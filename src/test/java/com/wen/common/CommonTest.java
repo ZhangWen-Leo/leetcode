@@ -4,10 +4,7 @@ import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class CommonTest {
 
@@ -23,16 +20,8 @@ public class CommonTest {
 
     @Test
     public void test3() {
-        Stack<Integer> stack = new Stack<>();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        Stack<Integer> stack2 = new Stack<>();
-        stack2.addAll(stack);
-        Iterator<Integer> ite = stack2.iterator();
-        while (ite.hasNext()) {
-            System.out.println(ite.next());
-        }
+        System.out.println(Math.pow(26, 7));
+        System.out.println(Integer.MAX_VALUE);
     }
 
     @Test
