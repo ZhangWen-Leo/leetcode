@@ -1,6 +1,6 @@
 package com.wen.repository.solution1200To1299;
 
-import com.wen.myQuestion.UnionFind;
+import com.wen.util.UnionFind;
 
 import java.util.*;
 

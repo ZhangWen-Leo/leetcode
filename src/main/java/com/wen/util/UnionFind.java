@@ -1,4 +1,4 @@
-package com.wen.myQuestion;
+package com.wen.util;
 
 public class UnionFind {
     private int[] parent;

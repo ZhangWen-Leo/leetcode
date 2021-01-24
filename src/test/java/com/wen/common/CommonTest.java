@@ -70,4 +70,10 @@ public class CommonTest {
         sets.remove(set2);
         return;
     }
+
+    @Test
+    public void testForBinary() {
+        int x = -2;
+        System.out.println(x % 2);
+    }
 }

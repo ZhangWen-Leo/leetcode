@@ -29,18 +29,6 @@ public class TreeOrGraphTest {
     }
 
     @Test
-    public void numIslands() {
-        char[][] grid = {
-                {'1','1','0','0','0'},
-                {'1','1','0','0','0'},
-                {'0','0','1','0','0'},
-                {'0','0','0','1','1'}
-        };
-
-        System.out.println(treeOrGraph.numIslands(grid));
-    }
-
-    @Test
     public void test() {
         System.out.println(System.currentTimeMillis());
     }

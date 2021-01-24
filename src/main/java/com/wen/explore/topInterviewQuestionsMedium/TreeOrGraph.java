@@ -11,24 +11,9 @@ import java.util.List;
 public class TreeOrGraph {
     /**
      * 二叉树的中序遍历
+     *
+     * 见94
      */
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-
-        if (root == null) {
-            return list;
-        }
-
-        if (root.left != null) {
-            list.addAll(inorderTraversal(root.left));
-        }
-        list.add(root.val);
-        if (root.right != null) {
-            list.addAll(inorderTraversal(root.right));
-        }
-
-        return list;
-    }
 
     /**
      * 二叉树的锯齿形层次遍历
@@ -134,58 +119,7 @@ public class TreeOrGraph {
 
     /**
      * 岛屿数量
+     *
+     * 见200
      */
-    public int numIslands(char[][] grid) {
-        int result = 0;
-        if (grid.length == 0) {
-            return result;
-        }
-        boolean[][] checked = new boolean[grid.length][grid[0].length];
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (!checked[i][j] && grid[i][j] == '1') {
-                    result++;
-                    myNumIslands(grid, checked, i, j);
-                }
-            }
-        }
-
-        return result;
-    }
-    private void myNumIslands(char[][] grid, boolean[][] checked, int i, int j) {
-        checked[i][j] = true;
-        if (i > 0) {
-            if (!checked[i-1][j] && grid[i-1][j] == '1') {
-                myNumIslands(grid, checked, i-1, j);
-            }
-            else {
-                checked[i-1][j] = true;
-            }
-        }
-        if (j > 0) {
-            if (!checked[i][j-1] && grid[i][j-1] == '1') {
-                myNumIslands(grid, checked, i, j-1);
-            }
-            else {
-                checked[i][j-1] = true;
-            }
-        }
-        if (i < grid.length-1) {
-            if (!checked[i+1][j] && grid[i+1][j] == '1') {
-                myNumIslands(grid, checked, i+1, j);
-            }
-            else {
-                checked[i+1][j] = true;
-            }
-        }
-        if (j < grid[0].length-1) {
-            if (!checked[i][j+1] && grid[i][j+1] == '1') {
-                myNumIslands(grid, checked, i, j+1);
-            }
-            else {
-                checked[i][j+1] = true;
-            }
-        }
-    }
 }

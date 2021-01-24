@@ -10,10 +10,10 @@ public class ReverseList {
     /**
      * 递归实现
      */
-    public ListNode reverseByRecursion(ListNode head) {
+    public static ListNode reverseByRecursion(ListNode head) {
         return reverseByRecursionSup(head)[0];
     }
-    private ListNode[] reverseByRecursionSup(ListNode current) {
+    private static ListNode[] reverseByRecursionSup(ListNode current) {
         if (current == null) {
             return new ListNode[]{null, null};
         }
@@ -28,5 +28,25 @@ public class ReverseList {
             current.next = null;
             return followList;
         }
+    }
+
+    /**
+     * 遍历实现
+     */
+    public static ListNode reverseByTraverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode p = head.next, q = head.next.next;
+        head.next = null;
+        while (q != null) {
+            p.next = head;
+            head = p;
+            p = q;
+            q = q.next;
+        }
+        p.next = head;
+        head = p;
+        return head;
     }
 }

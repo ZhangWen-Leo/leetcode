@@ -2,6 +2,7 @@ package com.wen.repository.solution0200To0299;
 
 import com.wen.dataStructure.ListNode;
 import com.wen.dataStructure.TreeNode;
+import com.wen.myQuestion.listQuestion.ReverseList;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -94,20 +95,7 @@ public class Solution0230To0239 {
         return true;
     }
     private ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-        ListNode p = head.next, q = head.next.next;
-        head.next = null;
-        while (q != null) {
-            p.next = head;
-            head = p;
-            p = q;
-            q = q.next;
-        }
-        p.next = head;
-        head = p;
-        return head;
+        return ReverseList.reverseByRecursion(head);
     }
 
     /**

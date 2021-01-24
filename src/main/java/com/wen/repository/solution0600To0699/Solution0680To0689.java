@@ -1,6 +1,6 @@
 package com.wen.repository.solution0600To0699;
 
-import com.wen.myQuestion.UnionFind;
+import com.wen.util.UnionFind;
 
 public class Solution0680To0689 {
 
