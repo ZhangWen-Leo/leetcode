@@ -160,4 +160,45 @@ public class Solution0970To0979 {
 
         return result;
     }
+
+    /**
+     * 978. Longest Turbulent Subarray
+     */
+    public int maxTurbulenceSize(int[] arr) {
+        int len = arr.length;
+        if (len == 0) {
+            return 0;
+        }
+        int res = 1, cur = 1;
+        int tend = 0;
+
+        for (int i = 1; i < len; i++) {
+            if (tend != 0) {
+                if (arr[i] == arr[i-1]) {
+                    cur = 1;
+                    tend = 0;
+                }
+                else if ((tend > 0 && arr[i] < arr[i-1]) || (tend < 0 && arr[i] > arr[i-1])) {
+                    cur++;
+                    res = Math.max(res, cur);
+                    tend = -tend;
+                }
+                else {
+                    cur = 2;
+                }
+            }
+            else {
+                if (arr[i] == arr[i-1]) {
+                    cur = 1;
+                }
+                else {
+                    cur++;
+                    res = Math.max(res, cur);
+                    tend = arr[i] - arr[i-1];
+                }
+            }
+        }
+
+        return res;
+    }
 }

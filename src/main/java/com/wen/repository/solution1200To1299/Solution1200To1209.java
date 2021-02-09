@@ -78,4 +78,29 @@ public class Solution1200To1209 {
         }
         return true;
     }
+
+    /**
+     * 1208. Get Equal Substrings Within Budget
+     */
+    public int equalSubstring(String s, String t, int maxCost) {
+        int max = 0;
+        int left = 0, right = 0;
+        int cost = 0;
+        int len = s.length();
+        int[] costs = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            costs[i] = Math.abs(s.charAt(i) - t.charAt(i));
+        }
+
+        while (right < len) {
+            cost += costs[right++];
+            while (cost > maxCost) {
+                cost -= costs[left++];
+            }
+            max = Math.max(max, right-left);
+        }
+
+        return max;
+    }
 }
