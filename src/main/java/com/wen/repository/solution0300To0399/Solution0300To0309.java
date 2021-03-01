@@ -3,6 +3,12 @@ package com.wen.repository.solution0300To0399;
 public class Solution0300To0309 {
 
     /**
+     * 303. Range Sum Query - Immutable
+     *
+     * 见/design/NumArray
+     */
+
+    /**
      * 309. Best Time to Buy and Sell Stock with Cooldown
      */
     private int[] profit;

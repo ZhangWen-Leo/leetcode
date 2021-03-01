@@ -12,8 +12,11 @@ public class Solution0950To0959 {
 
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
-                if (!matrix[i][j] && grid[i].charAt(j) != '/')
+                if (!matrix[i][j] && grid[i].charAt(j) != '/') {
+
+                }
             }
         }
+        return 0;
     }
 }
