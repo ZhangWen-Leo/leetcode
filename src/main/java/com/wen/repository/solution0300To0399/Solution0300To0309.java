@@ -9,6 +9,12 @@ public class Solution0300To0309 {
      */
 
     /**
+     * 304. Range Sum Query 2D - Immutable
+     *
+     * 见/design/NumMatrix
+     */
+
+    /**
      * 309. Best Time to Buy and Sell Stock with Cooldown
      */
     private int[] profit;
