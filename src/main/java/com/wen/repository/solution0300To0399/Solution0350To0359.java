@@ -1,9 +1,6 @@
 package com.wen.repository.solution0300To0399;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class Solution0350To0359 {
 
@@ -22,30 +19,29 @@ public class Solution0350To0359 {
 
         envelopeIntervals = envelopes;
         envelopeResults = new int[envelopes.length];
-
-        int max = 0;
-        for (int i = 0; i < envelopes.length; i++) {
-            max = Integer.max(max, getEnvelopeResult(i));
-        }
-
-        return max;
-    }
-    private int getEnvelopeResult(int i) {
-        if (envelopeResults[i] > 0) {
-            return envelopeResults[i];
-        }
+        Arrays.sort(envelopeIntervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] == o2[0]) {
+                    return o2[1] - o1[1];
+                }
+                else {
+                    return o1[0] - o2[0];
+                }
+            }
+        });
 
         int max = 1;
-        for (int j = 0; j < envelopeIntervals.length; j++) {
-            if (
-                    envelopeIntervals[j][0] < envelopeIntervals[i][0]
-                    && envelopeIntervals[j][1] < envelopeIntervals[i][1]
-            ) {
-                max = Integer.max(max, getEnvelopeResult(j) + 1);
+        Arrays.fill(envelopeResults, 1);
+        for (int i = 1; i < envelopes.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (envelopeIntervals[j][1] < envelopeIntervals[i][1]) {
+                    envelopeResults[i] = Math.max(envelopeResults[i], envelopeResults[j] + 1);
+                }
             }
+            max = Math.max(max, envelopeResults[i]);
         }
 
-        envelopeResults[i] = max;
         return max;
     }
 
