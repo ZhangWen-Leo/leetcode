@@ -1,4 +1,4 @@
-package com.wen.explore.read.queueStack.design;
+package com.wen.repository.solution0200To0299.design;
 
 import java.util.Stack;
 
