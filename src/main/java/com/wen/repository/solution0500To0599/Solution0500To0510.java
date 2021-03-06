@@ -4,6 +4,7 @@ import com.wen.dataStructure.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Solution0500To0510 {
 
@@ -54,6 +55,54 @@ public class Solution0500To0510 {
         }
         lastNum = root.val;
         inOrderSearch(root.right);
+    }
+
+    /**
+     * 503. Next Greater Element II
+     */
+    public int[] nextGreaterElements(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return new int[0];
+        }
+        int max = Integer.MIN_VALUE, maxIndex = 0;
+        int[] res = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            if (nums[i] > max) {
+                max = nums[i];
+                maxIndex = i;
+            }
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        int i = maxIndex;
+        do {
+            while (!stack.isEmpty() && nums[i] >= stack.peek()) {
+                stack.pop();
+            }
+            if (stack.isEmpty()) {
+                res[i] = -1;
+            }
+            else {
+                res[i] = stack.peek();
+            }
+            stack.push(nums[i]);
+
+            i = nextIndex(i, -1, len);
+        } while (i != maxIndex);
+
+        return res;
+    }
+    private int nextIndex(int cur, int ins, int len) {
+        cur += ins;
+        if (cur >= len) {
+            cur %= len;
+        }
+        while (cur < 0) {
+            cur += len;
+        }
+        return cur;
     }
 
     /**

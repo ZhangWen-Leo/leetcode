@@ -17,4 +17,11 @@ public class Solution0500To0510Test {
         TreeNode t1 = new TreeNode(1, null, t2);
         System.out.println(Arrays.toString(solution.findMode(t1)));
     }
+
+    @Test
+    public void nextGreaterElements() {
+        int[] nums = {1, 2, 1};
+        int[] res = solution.nextGreaterElements(nums);
+        System.out.println(Arrays.toString(res));
+    }
 }
