@@ -66,108 +66,102 @@ public class Solution0130To0139 {
      * 1 <= s.length <= 16
      * s contains only lowercase English letters.
      *
-     * 36ms 5.5%
+     * 13ms
      */
-    private String partitionS;
-    private ArrayList<LinkedList<String>>[] partitionDp;
+    private boolean[][] isPalindromeDp;
+    private String s;
+    private List<List<String>>[] partitionDp;
     public List<List<String>> partition(String s) {
-        partitionS = s;
-        partitionDp = new ArrayList[s.length()+1];
-        partitionDp[s.length()] = new ArrayList<>();
-        partitionDp[s.length()].add(new LinkedList<>());
+        int len = s.length();
+        isPalindromeDp = new boolean[len][len];
+        this.s = s;
+        partitionDp = new List[len + 1];
+        partitionDp[len] = new ArrayList<>();
+        partitionDp[len].add(new ArrayList<>());
 
-        List<List<String>> result = new ArrayList<>();
-        ArrayList<LinkedList<String>> lists = getPartition(0);
-        for (LinkedList<String> list :
-                lists) {
-            result.add(list);
-        }
-        return result;
+        return partition(s, 0);
     }
-    private ArrayList<LinkedList<String>> getPartition(int i) {
-        if (i >= partitionS.length()) {
-            return partitionDp[partitionS.length()];
+    private List<List<String>> partition(String s, int start) {
+        if (start >= s.length()) {
+            return partitionDp[s.length()];
         }
-        if (partitionDp[i] != null) {
-            return partitionDp[i];
+        if (partitionDp[start] != null) {
+            return partitionDp[start];
         }
 
-        partitionDp[i] = new ArrayList<>();
-        for (int j = i; j < partitionS.length(); j++) {
-            if (isPalindrome(i, j)) {
-                ArrayList<LinkedList<String>> subResult = getPartition(j+1);
-                for (LinkedList<String> list :
-                        subResult) {
-                    LinkedList<String> newList = (LinkedList<String>) list.clone();
-                    newList.addFirst(partitionS.substring(i, j+1));
-                    partitionDp[i].add(newList);
+        partitionDp[start] = new ArrayList<>();
+        for (int i = start; i < s.length(); i++) {
+            if (isPalindrome(start, i)) {
+                List<List<String>> subRes = partition(s, i + 1);
+                for (List<String> subList: subRes) {
+                    List<String> list = new ArrayList<>();
+                    list.add(s.substring(start, i + 1));
+                    list.addAll(subList);
+                    partitionDp[start].add(list);
                 }
             }
         }
-
-        return partitionDp[i];
+        return partitionDp[start];
     }
-    private boolean isPalindrome(int start, int end) {
-        while (start < end) {
-            if (partitionS.charAt(start) != partitionS.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
+    private boolean isPalindrome(int x, int y) {
+        if (x >= y) {
+            return true;
         }
-        return true;
+        else {
+            return isPalindrome(x + 1, y - 1) && s.charAt(x) == s.charAt(y);
+        }
     }
-    /**
-     * 34ms 5.5%
-     */
-//    private int[][] partitionDp;
+
+//    /**
+//     * 解法一
+//     *
+//     * 36ms 5.5%
+//     */
 //    private String partitionS;
+//    private ArrayList<LinkedList<String>>[] partitionDp;
 //    public List<List<String>> partition(String s) {
-//        int length = s.length();
-//        partitionDp = new int[length][length];
 //        partitionS = s;
+//        partitionDp = new ArrayList[s.length()+1];
+//        partitionDp[s.length()] = new ArrayList<>();
+//        partitionDp[s.length()].add(new LinkedList<>());
 //
-//        return partition(0);
-//    }
-//    private List<List<String>> partition(int start) {
 //        List<List<String>> result = new ArrayList<>();
-//        if (start >= partitionS.length()) {
-//            result.add(new LinkedList<>());
-//            return result;
-//        }
-//
-//        for (int i = start; i < partitionS.length(); i++) {
-//            if (isPalindrome(start, i) == 1) {
-//                List<List<String>> subResult = partition(i+1);
-//                for (List<String> list :
-//                        subResult) {
-//                    list.add(0, partitionS.substring(start, i + 1));
-//                }
-//                result.addAll(subResult);
-//            }
-//        }
+//        ArrayList<LinkedList<String>> lists = getPartition(0);
+//        result.addAll(lists);
 //        return result;
 //    }
-//    private int isPalindrome(int start, int end) {
-//        if (partitionDp[start][end] != 0) {
-//            return partitionDp[start][end];
+//    private ArrayList<LinkedList<String>> getPartition(int i) {
+//        if (i >= partitionS.length()) {
+//            return partitionDp[partitionS.length()];
 //        }
-//        if (start == end) {
-//            partitionDp[start][end] = 1;
-//            return partitionDp[start][end];
+//        if (partitionDp[i] != null) {
+//            return partitionDp[i];
 //        }
-//        if (partitionS.charAt(start) == partitionS.charAt(end)) {
-//            if (start + 1 == end || isPalindrome(start+1, end-1) == 1) {
-//                partitionDp[start][end] = 1;
+//
+//        partitionDp[i] = new ArrayList<>();
+//        for (int j = i; j < partitionS.length(); j++) {
+//            if (isPalindrome(i, j)) {
+//                ArrayList<LinkedList<String>> subResult = getPartition(j+1);
+//                for (LinkedList<String> list :
+//                        subResult) {
+//                    LinkedList<String> newList = (LinkedList<String>) list.clone();
+//                    newList.addFirst(partitionS.substring(i, j+1));
+//                    partitionDp[i].add(newList);
+//                }
 //            }
-//            else {
-//                partitionDp[start][end] = 2;
+//        }
+//
+//        return partitionDp[i];
+//    }
+//    private boolean isPalindrome(int start, int end) {
+//        while (start < end) {
+//            if (partitionS.charAt(start) != partitionS.charAt(end)) {
+//                return false;
 //            }
+//            start++;
+//            end--;
 //        }
-//        else {
-//            partitionDp[start][end] = 2;
-//        }
-//        return partitionDp[start][end];
+//        return true;
 //    }
 
     /**
