@@ -41,7 +41,6 @@ public class Solution0130To0139 {
                 }
             }
         }
-        return;
     }
     private void check(int i, int j) {
         int x = board.length, y = board[0].length;
@@ -68,12 +67,10 @@ public class Solution0130To0139 {
      *
      * 13ms
      */
-    private boolean[][] isPalindromeDp;
     private String s;
     private List<List<String>>[] partitionDp;
     public List<List<String>> partition(String s) {
         int len = s.length();
-        isPalindromeDp = new boolean[len][len];
         this.s = s;
         partitionDp = new List[len + 1];
         partitionDp[len] = new ArrayList<>();
@@ -169,35 +166,78 @@ public class Solution0130To0139 {
      *
      * 1 <= s.length <= 2000
      * s consists of lower-case English letters only.
+     *
+     * 20ms
      */
-    private int[] minCutDp;
-    private String minCutS;
+    private int[] resDp;
+    private int[][] isPalindromeDp; // 132
     public int minCut(String s) {
-        minCutDp = new int[s.length()];
-        Arrays.fill(minCutDp, -1);
-        minCutS = s;
+        int len = s.length();
+        isPalindromeDp = new int[len][len];
+        resDp = new int[len];
+        Arrays.fill(resDp, -1);
 
-        return getMinCut(0);
+        return minCut(s, 0);
     }
-    private int getMinCut(int i) {
-        if (minCutDp[i] >= 0) {
-            return minCutDp[i];
+    private int minCut(String s, int start) {
+        int len = s.length();
+        if (start >= len) {
+            return -1;
+        }
+        if (resDp[start] >= 0) {
+            return resDp[start];
         }
 
-        minCutDp[i] = Integer.MAX_VALUE;
-        for (int j = i; j < minCutS.length(); j++) {
-            if (isPalindrome(i, j)) {
-                if (j == minCutS.length() - 1) {
-                    minCutDp[i] = 0;
-                }
-                else {
-                    minCutDp[i] = Math.min(minCutDp[i], getMinCut(j+1) + 1);
-                }
+        resDp[start] = Integer.MAX_VALUE;
+        for (int i = start; i < len; i++) {
+            if (getPalindrome(s, start, i)) {
+                resDp[start] = Math.min(resDp[start], 1 + minCut(s, i + 1));
             }
         }
 
-        return minCutDp[i];
+        return resDp[start];
     }
+    private boolean getPalindrome(String s, int x, int y) {
+        if (x >= y) {
+            return true;
+        }
+        else if (isPalindromeDp[x][y] == 0) {
+            isPalindromeDp[x][y] = getPalindrome(s, x + 1, y - 1) && s.charAt(x) == s.charAt(y) ? 1 : -1;
+        }
+        return isPalindromeDp[x][y] == 1;
+    }
+
+//    /**
+//     * 785ms
+//     */
+//    private int[] minCutDp;
+//    private String minCutS;
+//    public int minCut(String s) {
+//        minCutDp = new int[s.length()];
+//        Arrays.fill(minCutDp, -1);
+//        minCutS = s;
+//
+//        return getMinCut(0);
+//    }
+//    private int getMinCut(int i) {
+//        if (minCutDp[i] >= 0) {
+//            return minCutDp[i];
+//        }
+//
+//        minCutDp[i] = Integer.MAX_VALUE;
+//        for (int j = i; j < minCutS.length(); j++) {
+//            if (isPalindrome(i, j)) {
+//                if (j == minCutS.length() - 1) {
+//                    minCutDp[i] = 0;
+//                }
+//                else {
+//                    minCutDp[i] = Math.min(minCutDp[i], getMinCut(j+1) + 1);
+//                }
+//            }
+//        }
+//
+//        return minCutDp[i];
+//    }
 
     /**
      * 134. Gas Station
@@ -329,12 +369,11 @@ public class Solution0130To0139 {
         Set<Integer> set1 = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
 
-        for (int i = 0; i < nums.length; i++) {
-            if (!set1.contains(nums[i])) {
-                set1.add(nums[i]);
-            }
-            else {
-                set2.add(nums[i]);
+        for (int num : nums) {
+            if (!set1.contains(num)) {
+                set1.add(num);
+            } else {
+                set2.add(num);
             }
         }
 
