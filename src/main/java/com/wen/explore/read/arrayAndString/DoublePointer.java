@@ -72,25 +72,7 @@ public class DoublePointer {
 
     /**
      * 长度最小的子数组
+     *
+     * 见209
      */
-    public int minSubArrayLen(int s, int[] nums) {
-        int fast = 0, slow = 0, sum = 0, min = Integer.MAX_VALUE;
-
-        while (fast <= nums.length) {
-            if (sum < s) {
-                if (fast < nums.length) {
-                    sum += nums[fast++];
-                }
-                else {
-                    break;
-                }
-            }
-            else {
-                min = Integer.min(fast - slow, min);
-                sum -= nums[slow++];
-            }
-        }
-
-        return min == Integer.MAX_VALUE ? 0 : min;
-    }
 }
