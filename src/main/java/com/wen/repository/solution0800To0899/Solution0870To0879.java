@@ -13,8 +13,6 @@ public class Solution0870To0879 {
      * 1 <= group[i] <= 100
      * profit.length == group.length
      * 0 <= profit[i] <= 100
-     *
-     * TODO
      */
     private int[][][] profitDp;
     private int[] group;
