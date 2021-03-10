@@ -36,22 +36,9 @@ public class SortAndSearch {
 
     /**
      * 数组中的第K个最大元素
+     *
+     * 见215
      */
-    public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        for (int num :
-                nums) {
-            if (queue.size() < k) {
-                queue.offer(num);
-            }
-            else if (num > queue.peek()){
-                queue.poll();
-                queue.offer(num);
-            }
-        }
-
-        return queue.peek();
-    }
 
     /**
      * 寻找峰值

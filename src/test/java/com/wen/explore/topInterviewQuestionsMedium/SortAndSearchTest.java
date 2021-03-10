@@ -24,12 +24,6 @@ public class SortAndSearchTest {
     }
 
     @Test
-    public void findKthLargest() {
-        int[] a = {3,2,1,5,6,4};
-        System.out.println(sortAndSearch.findKthLargest(a, 2));
-    }
-
-    @Test
     public void findPeakElement() {
         int[] a = {2,1};
         System.out.println(sortAndSearch.findPeakElement(a));
