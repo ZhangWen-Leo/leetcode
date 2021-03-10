@@ -4,6 +4,7 @@ import com.wen.dataStructure.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Solution0220To0229 {
 
@@ -46,6 +47,100 @@ public class Solution0220To0229 {
 
         return max * max;
     }
+
+    /**
+     * 224. Basic Calculator
+     *
+     * 1 <= s.length <= 3 * 10^5
+     * s consists of digits, '+', '-', '(', ')', and ' '.
+     * s represents a valid expression.
+     *
+     * 17ms
+     *
+     * @param s 一个有效的算术表达式字符串，包含数字、'+'、'-'、括号和空格
+     * @return  返回算术表达式s的计算结果
+     */
+    public int calculate(String s) {
+        Stack<int[]> stack = new Stack<>();
+        stack.push(new int[]{0, 1});
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            int[] peek = stack.peek();
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                int left = i;
+                while (i < len && Character.isDigit(s.charAt(i))) {
+                    i++;
+                }
+                int num = Integer.valueOf(s.substring(left, i));
+                peek[0] += peek[1] == 1 ? num : -num;
+                i--;
+            }
+            else if (c == '+') {
+                peek[1] = 1;
+            }
+            else if (c == '-') {
+                peek[1] = -1;
+            }
+            else if (c == '(') {
+                stack.add(new int[]{0, 1});
+            }
+            else if (c == ')') {
+                int[] pop = stack.pop();
+                peek = stack.peek();
+
+                peek[0] += peek[1] == 1 ? pop[0] : -pop[0];
+            }
+        }
+
+        return stack.peek()[0];
+    }
+//    /**
+//     * 389ms
+//     */
+//    public int calculate(String s) {
+//        int len = s.length();
+//        int res = 0;
+//        boolean add = true;
+//        for (int i = 0; i < len; i++) {
+//            char c = s.charAt(i);
+//            if (Character.isDigit(c)) {
+//                int left = i;
+//                while (i < len && Character.isDigit(s.charAt(i))) {
+//                    i++;
+//                }
+//                int num = Integer.valueOf(s.substring(left, i));
+//                res += add ? num : -num;
+//                i--;
+//            }
+//            else if (c == '+') {
+//                add = true;
+//            }
+//            else if (c == '-') {
+//                add = false;
+//            }
+//            else if (c == '(') {
+//                i++;
+//                int left = i;
+//                Stack<Boolean> stack = new Stack<>();
+//                stack.push(true);
+//                while (i < len && !stack.isEmpty()) {
+//                    c = s.charAt(i);
+//                    if (c == '(') {
+//                        stack.push(true);
+//                    }
+//                    else if (c == ')') {
+//                        stack.pop();
+//                    }
+//                    i++;
+//                }
+//                int num = calculate(s.substring(left, i));
+//                res += add ? num : -num;
+//                i--;
+//            }
+//        }
+//        return res;
+//    }
 
     /**
      * 226. 翻转二叉树

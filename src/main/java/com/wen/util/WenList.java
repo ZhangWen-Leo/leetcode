@@ -13,6 +13,14 @@ public class WenList {
         }
         return (List) getObjectFromString(str);
     }
+    public static int[] getArrayFromList(List<Integer> list) {
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+
+        return res;
+    }
 
     private static List splitWithComma(String str) {
         List result = new ArrayList();
