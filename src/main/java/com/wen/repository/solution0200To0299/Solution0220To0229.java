@@ -60,7 +60,7 @@ public class Solution0220To0229 {
      * @param s 一个有效的算术表达式字符串，包含数字、'+'、'-'、括号和空格
      * @return  返回算术表达式s的计算结果
      */
-    public int calculate(String s) {
+    public int calculate224(String s) {
         Stack<int[]> stack = new Stack<>();
         stack.push(new int[]{0, 1});
         int len = s.length();
@@ -155,6 +155,65 @@ public class Solution0220To0229 {
         root.right = invertTree(left);
 
         return root;
+    }
+
+    /**
+     * 227. Basic Calculator II
+     *
+     * 1 <= s.length <= 3 * 105
+     * s consists of integers and operators ('+', '-', '*', '/') separated by some number of spaces.
+     * s represents a valid expression.
+     * All the integers in the expression are non-negative integers in the range [0, 231 - 1].
+     * The answer is guaranteed to fit in a 32-bit integer.
+     *
+     * 压缩为a +(-) b *(/) c
+     *
+     * @param s 一个有效的算术表达式字符串，包含数字、'+'、'-'、'*'、'/'和空格
+     * @return  返回算术表达式s的计算结果
+     */
+    public int calculate(String s) {
+        int a = 0, b = 0;
+        boolean add = true;
+        int high = 0;   //  0:无 1:* 2:/
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                int left = i;
+                while (i < len && Character.isDigit(s.charAt(i))) {
+                    i++;
+                }
+                int num = Integer.valueOf(s.substring(left, i));
+                if (high == 1) {
+                    b *= num;
+                    high = 0;
+                }
+                else if (high == 2) {
+                    b /= num;
+                    high = 0;
+                }
+                else {
+                    b = num;
+                }
+                i--;
+            }
+            else if (c == '+') {
+                a += add ? b : -b;
+                add = true;
+            }
+            else if (c == '-') {
+                a += add ? b : -b;
+                add = false;
+            }
+            else if (c == '*') {
+                high = 1;
+            }
+            else if (c == '/') {
+                high = 2;
+            }
+        }
+
+        return add ? a + b : a - b;
     }
 
     /**
