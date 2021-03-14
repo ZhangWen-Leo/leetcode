@@ -9,4 +9,12 @@ public class Solution0700To0710 {
      *
      * 见design/MyHashSet
      */
+
+    /**
+     * 706. Design HashMap
+     *
+     * 设计HashMap
+     *
+     * 见design/MyHashMap
+     */
 }
