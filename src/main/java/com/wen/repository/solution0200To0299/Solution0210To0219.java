@@ -299,4 +299,115 @@ public class Solution0210To0219 {
         }
         return res;
     }
+
+    /**
+     * 218. The Skyline Problem
+     *
+     * 1 <= buildings.length <= 10^4
+     * 0 <= left[i] < right[i] <= 2^31 - 1
+     * 1 <= height[i] <= 2^31 - 1
+     * buildings is sorted by left[i] in non-decreasing order.
+     *
+     * @param buildings 二维数组，每一项building表示一个建筑，building[0]表示开始点，building[1]表示结束点
+     *                  building[2]表示高度
+     * @return  将buildings融合，返回高度变化的点，[point, height]，point表示点，height表示高度
+     */
+    public List<List<Integer>> getSkyline(int[][] buildings) {
+        int len = buildings.length;
+        List<List<Integer>> res = new ArrayList<>();
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+        int cur = 0;
+
+        for (int i = 0; i < len; i++) {
+            int[] building = buildings[i];
+            while (!queue.isEmpty() && queue.peek()[1] <= building[0]) {
+                int index = queue.poll()[1];
+                cur = 0;
+                Iterator<int[]> iterator = queue.iterator();
+                while (iterator.hasNext()) {
+                    int[] b = iterator.next();
+                    if (b[1] != index) {
+                        cur = b[2];
+                        break;
+                    }
+                }
+                List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
+                if (last != null && last.get(0) == index) {
+                    setAndFuse(res, cur, last);
+                }
+                else {
+                    List<Integer> point = new ArrayList<>();
+                    point.add(index);
+                    point.add(cur);
+                    res.add(point);
+                }
+            }
+            if (building[2] > cur) {
+                cur = building[2];
+                List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
+                if (last != null && last.get(0) == building[0]) {
+                    setAndFuse(res, cur, last);
+                }
+                else {
+                    List<Integer> point = new ArrayList<>();
+                    point.add(building[0]);
+                    point.add(building[2]);
+                    res.add(point);
+                }
+            }
+
+            Iterator<int[]> iterator = queue.iterator();
+            boolean flag = false;
+            while (iterator.hasNext()) {
+                int[] next = iterator.next();
+                if (next[1] < building[1] && next[2] < building[2]) {
+                    iterator.remove();
+                }
+                if (next[1] > building[1] && next[2] > building[2]) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                queue.offer(building);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int index = queue.poll()[1];
+            cur = 0;
+            Iterator<int[]> iterator = queue.iterator();
+            while (iterator.hasNext()) {
+                int[] b = iterator.next();
+                if (b[1] != index) {
+                    cur = b[2];
+                    break;
+                }
+            }
+            List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
+            if (last != null && last.get(0) == index) {
+                setAndFuse(res, cur, last);
+            }
+            else {
+                List<Integer> point = new ArrayList<>();
+                point.add(index);
+                point.add(cur);
+                res.add(point);
+            }
+        }
+
+        return res;
+    }
+    private void setAndFuse(List<List<Integer>> res, int cur, List<Integer> last) {
+        if (last.get(1) < cur) {
+            last.set(1, cur);
+            while (res.size() > 1 && res.get(res.size()-1).get(1) == res.get(res.size()-2).get(1)) {
+                res.remove(res.size()-1);
+            }
+        }
+    }
 }

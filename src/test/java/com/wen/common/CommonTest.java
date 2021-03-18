@@ -20,8 +20,10 @@ public class CommonTest {
 
     @Test
     public void test3() {
-        System.out.println(Math.pow(26, 7));
-        System.out.println(Integer.MAX_VALUE);
+        double a = 0.1;
+        double b = 0.2;
+        double c = 0.3;
+        System.out.println(a + b == c);
     }
 
     @Test

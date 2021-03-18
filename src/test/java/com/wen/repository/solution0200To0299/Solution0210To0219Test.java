@@ -29,4 +29,13 @@ public class Solution0210To0219Test {
         }
         System.out.println(solution.shortestPalindrome(s));
     }
+
+    @Test
+    public void getSkyline() {
+        int[][] buildings = {
+                {0, 2, 3},
+                {2, 5, 3}
+        };
+        System.out.println(solution.getSkyline(buildings));
+    }
 }
