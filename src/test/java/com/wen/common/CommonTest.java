@@ -23,7 +23,7 @@ public class CommonTest {
         double a = 0.1;
         double b = 0.2;
         double c = 0.3;
-        System.out.println(a + b == c);
+        System.out.println(Math.abs(a + b - c) < 0.0000001);
     }
 
     @Test
