@@ -4,8 +4,49 @@ import com.wen.dataStructure.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Solution0150To0159 {
+
+    /**
+     * 150. Evaluate Reverse Polish Notation
+     */
+    public int evalRPN(String[] tokens) {
+        Stack<String> stack = new Stack<>();
+
+        for (String token :
+                tokens) {
+            if (isOperator(token)) {
+                int num2 = Integer.valueOf(stack.pop());
+                int num1 = Integer.valueOf(stack.pop());
+                if (token.equals("+")) {
+                    stack.push(String.valueOf(num1 + num2));
+                }
+                else if (token.equals("-")) {
+                    stack.push(String.valueOf(num1 - num2));
+                }
+                else if (token.equals("*")) {
+                    stack.push(String.valueOf(num1 * num2));
+                }
+                else {
+                    stack.push(String.valueOf(num1 / num2));
+                }
+            }
+            else {
+                stack.push(token);
+            }
+        }
+
+        return Integer.valueOf(stack.pop());
+    }
+    private boolean isOperator(String token) {
+        if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     /**
      * 152. Maximum Product Subarray
