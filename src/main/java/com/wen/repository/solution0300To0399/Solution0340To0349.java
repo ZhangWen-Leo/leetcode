@@ -5,6 +5,12 @@ import java.util.*;
 public class Solution0340To0349 {
 
     /**
+     * 341. Flatten Nested List Iterator
+     *
+     * 见design/NestedIterator
+     */
+
+    /**
      * 344. Reverse String
      */
     public void reverseString(char[] s) {
