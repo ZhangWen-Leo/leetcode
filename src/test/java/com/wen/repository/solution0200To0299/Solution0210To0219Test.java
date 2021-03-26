@@ -33,8 +33,15 @@ public class Solution0210To0219Test {
     @Test
     public void getSkyline() {
         int[][] buildings = {
-                {0, 2, 3},
-                {2, 5, 3}
+                {2, 4, 70},
+                {3, 8, 30},
+                {6, 100, 41},
+                {7, 15, 70},
+                {10, 30, 102},
+                {15, 25, 76},
+                {60, 80, 91},
+                {70, 90, 72},
+                {85, 120, 59}
         };
         System.out.println(solution.getSkyline(buildings));
     }

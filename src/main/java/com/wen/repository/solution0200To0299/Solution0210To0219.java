@@ -313,101 +313,110 @@ public class Solution0210To0219 {
      * @return  将buildings融合，返回高度变化的点，[point, height]，point表示点，height表示高度
      */
     public List<List<Integer>> getSkyline(int[][] buildings) {
+        LinkedList<List<Integer>> res = new LinkedList<>();
+        MyList list = new MyList();
         int len = buildings.length;
-        List<List<Integer>> res = new ArrayList<>();
-        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[1] - o2[1];
-            }
-        });
-        int cur = 0;
 
         for (int i = 0; i < len; i++) {
             int[] building = buildings[i];
-            while (!queue.isEmpty() && queue.peek()[1] <= building[0]) {
-                int index = queue.poll()[1];
-                cur = 0;
-                Iterator<int[]> iterator = queue.iterator();
-                while (iterator.hasNext()) {
-                    int[] b = iterator.next();
-                    if (b[1] != index) {
-                        cur = b[2];
-                        break;
-                    }
-                }
-                List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
-                if (last != null && last.get(0) == index) {
-                    setAndFuse(res, cur, last);
-                }
-                else {
-                    List<Integer> point = new ArrayList<>();
-                    point.add(index);
-                    point.add(cur);
-                    res.add(point);
-                }
+            while (!list.isEmpty() && list.start.x <= building[0]) {
+                listAdd(res, list.start.x, list.start.next == null ? 0 : list.start.next.y);
+                list.removeFirst();
             }
-            if (building[2] > cur) {
-                cur = building[2];
-                List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
-                if (last != null && last.get(0) == building[0]) {
-                    setAndFuse(res, cur, last);
-                }
-                else {
-                    List<Integer> point = new ArrayList<>();
-                    point.add(building[0]);
-                    point.add(building[2]);
-                    res.add(point);
-                }
+            if (res.isEmpty() || building[2] > res.getLast().get(1)) {
+                listAdd(res, building[0], building[2]);
             }
-
-            Iterator<int[]> iterator = queue.iterator();
-            boolean flag = false;
-            while (iterator.hasNext()) {
-                int[] next = iterator.next();
-                if (next[1] < building[1] && next[2] < building[2]) {
-                    iterator.remove();
-                }
-                if (next[1] > building[1] && next[2] > building[2]) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                queue.offer(building);
-            }
+            list.insert(new ListNode(building[1], building[2]));
         }
-        while (!queue.isEmpty()) {
-            int index = queue.poll()[1];
-            cur = 0;
-            Iterator<int[]> iterator = queue.iterator();
-            while (iterator.hasNext()) {
-                int[] b = iterator.next();
-                if (b[1] != index) {
-                    cur = b[2];
-                    break;
-                }
-            }
-            List<Integer> last = res.size() > 0 ? res.get(res.size() - 1) : null;
-            if (last != null && last.get(0) == index) {
-                setAndFuse(res, cur, last);
+        while (!list.isEmpty()) {
+            listAdd(res, list.start.x, list.start.next == null ? 0 : list.start.next.y);
+            list.removeFirst();
+        }
+        Iterator<List<Integer>> iterator = res.listIterator();
+        int cur = -1;
+        while (iterator.hasNext()) {
+            List<Integer> next = iterator.next();
+            if (cur >= 0 && next.get(1) == cur) {
+                iterator.remove();
             }
             else {
-                List<Integer> point = new ArrayList<>();
-                point.add(index);
-                point.add(cur);
-                res.add(point);
+                cur = next.get(1);
             }
         }
 
         return res;
     }
-    private void setAndFuse(List<List<Integer>> res, int cur, List<Integer> last) {
-        if (last.get(1) < cur) {
-            last.set(1, cur);
-            while (res.size() > 1 && res.get(res.size()-1).get(1) == res.get(res.size()-2).get(1)) {
-                res.remove(res.size()-1);
+    class MyList {
+        ListNode start;
+        final ListNode head = new ListNode(Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        MyList() {
+            start = null;
+        }
+
+        boolean isEmpty() {
+            return start == null;
+        }
+
+        void insert(ListNode insert) {
+            if (start == null) {
+                start = insert;
+                head.next = start;
+            }
+            ListNode current = head, next = head.next;
+            while (next != null) {
+                if (insert.x <= next.x && insert.y <= next.y) {
+                    return;
+                }
+                else if (insert.x >= next.x && insert.y >= next.y) {
+                    current.next = next.next;
+                    next = current.next;
+                }
+                else if (insert.x < next.x) {
+                    insert.next = next;
+                    current.next = insert;
+                    start = head.next;
+                    return;
+                }
+                else {
+                    current = next;
+                    next = next.next;
+                }
+            }
+            current.next = insert;
+            start = head.next;
+        }
+
+        void removeFirst() {
+            if (start == null) {
+                return;
+            }
+            start = start.next;
+            head.next = start;
+        }
+    }
+    class ListNode {
+        int x;
+        int y;
+        ListNode next;
+
+        public ListNode(int x, int y) {
+            this.x = x;
+            this.y = y;
+            next = null;
+        }
+    }
+    private void listAdd(LinkedList<List<Integer>> linkedList, int x, int y) {
+        if (!linkedList.isEmpty()) {
+            List<Integer> last = linkedList.getLast();
+            if (last.get(0) == x) {
+                last.set(1, Math.max(last.get(1), y));
+                return;
             }
         }
+        List<Integer> list = new ArrayList<>();
+        list.add(x);
+        list.add(y);
+        linkedList.addLast(list);
     }
 }
