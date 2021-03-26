@@ -17,11 +17,10 @@ public class Solution0450To0459Test {
 
         System.out.println(solution.fourSumCount(A, B, C, D));
     }
-}
 
-/**
- [-1,1,1,1,-1]
- [0,-1,-1,0,1]
- [-1,-1,1,-1,-1]
- [0,1,0,-1,-1]
- */
+    @Test
+    public void find132pattern() {
+        int[] nums = {10,11,15,20,5,6,8,1,3,4,19};
+        System.out.println(solution.find132pattern(nums));
+    }
+}
