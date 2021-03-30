@@ -8,6 +8,28 @@ import java.util.List;
 public class Solution0190To0199 {
 
     /**
+     * 190. Reverse Bits
+     * @param n unsigned数
+     * @return  将n以2进制倒置
+     */
+    public int reverseBits(int n) {
+        long x;
+        if (n < 0) {
+            x = ((long)Math.pow(2, 32)) - ((long) ~n) -1;
+        }
+        else {
+            x = n;
+        }
+
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            result = result*2 + (int) (x % 2);
+            x /= 2;
+        }
+        return result;
+    }
+
+    /**
      * 191. Number of 1 Bits
      */
     public int hammingWeight(int n) {
