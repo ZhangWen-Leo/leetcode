@@ -419,4 +419,42 @@ public class Solution0210To0219 {
         list.add(y);
         linkedList.addLast(list);
     }
+
+    /**
+     * 219. Contains Duplicate II
+     *
+     * 1 <= nums.length <= 10^5
+     * -10^9 <= nums[i] <= 10^9
+     * 0 <= k <= 10^5
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        if (k == 0) {
+            return false;
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        int left = 0;
+        int right = k + 1;
+        for(int i = left; i < right && i < nums.length; i++) {
+            if (set.contains(nums[i])) {
+                return true;
+            }
+            set.add(nums[i]);
+        }
+
+        while (right < nums.length) {
+            set.remove(nums[left]);
+            if (set.contains(nums[right])) {
+                return true;
+            }
+            set.add(nums[right]);
+            left++;
+            right++;
+        }
+
+        return false;
+    }
 }

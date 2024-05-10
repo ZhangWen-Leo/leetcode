@@ -45,4 +45,26 @@ public class Solution0210To0219Test {
         };
         System.out.println(solution.getSkyline(buildings));
     }
+
+    @Test
+    public void containsNearbyDuplicate1() {
+        int[] nums = {1,2,3,1};
+        int k = 3;
+
+        System.out.println(solution.containsNearbyDuplicate(nums, k));
+    }
+    @Test
+    public void containsNearbyDuplicate2() {
+        int[] nums = {1,0,1,1};
+        int k = 1;
+
+        System.out.println(solution.containsNearbyDuplicate(nums, k));
+    }
+    @Test
+    public void containsNearbyDuplicate3() {
+        int[] nums = {1,2,3,1,2,3};
+        int k = 2;
+
+        System.out.println(solution.containsNearbyDuplicate(nums, k));
+    }
 }
