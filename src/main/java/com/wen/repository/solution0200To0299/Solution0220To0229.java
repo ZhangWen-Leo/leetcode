@@ -49,6 +49,79 @@ public class Solution0220To0229 {
     }
 
     /**
+     * 222. Count Complete Tree Nodes
+     *
+     * The number of nodes in the tree is in the range [0, 5 * 10^4].
+     * 0 <= Node.val <= 5 * 10^4
+     * The tree is guaranteed to be complete.
+     *
+     * @param root 根节点
+     * @return 完全二叉树的节点个数
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int rightDepth = this.countRightDepth(root);
+
+        return this.countFullTreeNode(rightDepth) + this.countNthDepCount(root, rightDepth + 1, -1, rightDepth);
+    }
+    private int countNthDepCount(TreeNode root, int depth, int knownLeftDepth, int knownRightDepth) {
+        int leftDepth = knownLeftDepth >= 0 ? knownLeftDepth : this.countLeftDepth(root);
+
+        if (leftDepth < depth) {
+            return 0;
+        }
+        int rightDepth = knownRightDepth >=0 ? knownRightDepth : this.countRightDepth(root);
+        if (rightDepth == depth) {
+            return (int) Math.pow(2, depth - 1);
+        }
+
+        int result = 0;
+        if (root.left != null) {
+            result += this.countNthDepCount(root.left, depth - 1, leftDepth - 1, -1);
+        }
+        if (root.right != null) {
+            result += this.countNthDepCount(root.right, depth - 1, -1, rightDepth - 1);
+        }
+        return result;
+    }
+    private int countLeftDepth(TreeNode root) {
+        if (root.left == null) {
+            return 1;
+        }
+        return this.countLeftDepth(root.left) + 1;
+    }
+    private int countRightDepth(TreeNode root) {
+        if (root.right == null) {
+            return 1;
+        }
+
+        return this.countRightDepth(root.right) + 1;
+    }
+    private int countFullTreeNode(int depth) {
+        if (depth == 0) {
+            return 0;
+        }
+        else {
+            return 1 + 2 * this.countFullTreeNode(depth - 1);
+        }
+    }
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+
+    /**
      * 224. Basic Calculator
      *
      * 1 <= s.length <= 3 * 10^5
