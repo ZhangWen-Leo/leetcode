@@ -120,6 +120,43 @@ public class Solution0220To0229 {
         }
     }
 
+    /**
+     * 223. Rectangle Area
+     *
+     * -10^4 <= ax1 <= ax2 <= 10^4
+     * -10^4 <= ay1 <= ay2 <= 10^4
+     * -10^4 <= bx1 <= bx2 <= 10^4
+     * -10^4 <= by1 <= by2 <= 10^4
+     *
+     * @param ax1
+     * @param ay1
+     * @param ax2
+     * @param ay2
+     * @param bx1
+     * @param by1
+     * @param bx2
+     * @param by2
+     * @return
+     */
+    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int conflictArea;
+        // 无相交情况
+        if (ax1 >= bx2 || ax2 <= bx1 || ay1 >= by2 || ay2 <= by1) {
+            conflictArea = 0;
+        } else {
+            int left = Math.max(ax1, bx1);
+            int right = Math.min(ax2, bx2);
+            int bottom = Math.max(ay1, by1);
+            int top = Math.min(ay2, by2);
+            conflictArea = this.calcRectArea(left, right, bottom, top);
+        }
+        int area1 = this.calcRectArea(ax1, ax2, ay1, ay2);
+        int area2 = this.calcRectArea(bx1, bx2, by1, by2);
+        return area1 + area2 - conflictArea;
+    }
+    private int calcRectArea(int x1, int x2, int y1, int y2) {
+        return (x2 - x1) * (y2 - y1);
+    }
 
     /**
      * 224. Basic Calculator
