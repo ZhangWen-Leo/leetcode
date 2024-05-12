@@ -67,4 +67,20 @@ public class Solution0830To0839 {
 
         return null;
     }
+
+    /**
+     * 836. Rectangle Overlap
+     *
+     * rec1.length == 4
+     * rec2.length == 4
+     * -10^9 <= rec1[i], rec2[i] <= 10^9
+     * rec1 and rec2 represent a valid rectangle with a non-zero area.
+     *
+     * @param rec1
+     * @param rec2
+     * @return
+     */
+    public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
+        return !(rec1[0] >= rec2[2] || rec1[2] <= rec2[0] || rec1[1] >= rec2[3] || rec1[3] <= rec2[1]);
+    }
 }
