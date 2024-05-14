@@ -19,6 +19,6 @@ public class Solution1550To1559Test {
     @Test
     public void findSmallestSetOfVertices() {
         List<Integer> result = solution.findSmallestSetOfVertices(1, new ArrayList<>());
-        System.out.println(result.getFirst());
+        System.out.println(result == null);
     }
 }
