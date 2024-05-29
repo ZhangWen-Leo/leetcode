@@ -3,6 +3,40 @@ package com.wen.repository.solution0800To0899;
 public class Solution0870To0879 {
 
   /**
+   * 876. Middle of the Linked List
+   *
+   * <p>The number of nodes in the list is in the range [1, 100].</p>
+   * <p>1 <= Node.val <= 100</p>
+   */
+  public ListNode middleNode(ListNode head) {
+    ListNode slow = head;
+    ListNode fast = head;
+    while (fast != null) {
+      fast = fast.next;
+      if (fast == null) {
+        break;
+      }
+      slow = slow.next;
+      fast = fast.next;
+    }
+    return slow;
+  }
+
+  public static class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+      this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+      this.val = val;
+      this.next = next;
+    }
+  }
+
+  /**
    * 879. Profitable Schemes
    *
    * <p>1 <= n <= 100</p>
@@ -12,13 +46,6 @@ public class Solution0870To0879 {
    * <p>profit.length == group.length</p>
    * <p>0 <= profit[i] <= 100</p>
    */
-  private int[][][] profitDp;
-  private int[] group;
-  private int[] profit;
-  private int[] sum;
-  private int len;
-  private static final int mod = 1000000007;
-
   public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
     len = group.length;
     profitDp = new int[n + 1][minProfit + 1][len];
@@ -32,6 +59,13 @@ public class Solution0870To0879 {
 
     return getProfit(n, minProfit, 0);
   }
+
+  private int[][][] profitDp;
+  private int[] group;
+  private int[] profit;
+  private int[] sum;
+  private int len;
+  private static final int mod = 1000000007;
 
   private int getProfit(int n, int target, int start) {
     if (start >= len) {
