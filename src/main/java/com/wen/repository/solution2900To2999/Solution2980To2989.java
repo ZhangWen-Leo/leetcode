@@ -6,6 +6,12 @@ public class Solution2980To2989 {
    *
    * <p>3 <= s.length <= 50</p>
    * <p>s consists of only lowercase English letters.</p>
+   * <p>
+   * <p>
+   * 2982. Find Longest Special Substring That Occurs Thrice II
+   *
+   * <p>3 <= s.length <= 5 * 10^5</p>
+   * <p>s consists of only lowercase English letters.</p>
    */
   public int maximumLength(String s) {
     this.max3LengthCount = new int['z' - 'a' + 1][3];
