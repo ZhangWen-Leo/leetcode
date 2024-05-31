@@ -12,4 +12,17 @@ public class Solution2960To2969Test {
     Assert.assertEquals(solution.countTestedDevices(new int[]{0, 1, 2}), 2);
     Assert.assertEquals(solution.countTestedDevices(new int[]{1, 2, 3}), 3);
   }
+
+  @Test
+  public void findMissingAndRepeatedValues() {
+    Assert.assertArrayEquals(new int[]{2, 4}, solution.findMissingAndRepeatedValues(new int[][]{
+      {1, 3},
+      {2, 2}
+    }));
+    Assert.assertArrayEquals(new int[]{9, 5}, solution.findMissingAndRepeatedValues(new int[][]{
+      {9, 1, 7},
+      {8, 9, 2},
+      {3, 4, 6}
+    }));
+  }
 }
