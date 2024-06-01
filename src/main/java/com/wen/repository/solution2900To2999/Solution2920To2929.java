@@ -11,7 +11,8 @@ public class Solution2920To2929 {
    * <p>0 <= edge[i][j] <= n - 1</p>
    * <p>edges[i][0] != edges[i][1]</p>
    * <p>The input is generated such that if team a is stronger than team b, team b is not stronger than team a.</p>
-   * <p>The input is generated such that if team a is stronger than team b and team b is stronger than team c, then team a is stronger than team c.</p>
+   * <p>The input is generated such that if team a is stronger than team b and team b is stronger than team c, then
+   * team a is stronger than team c.</p>
    */
   public int findChampion(int n, int[][] edges) {
     boolean[] betterThan = new boolean[n];
@@ -37,5 +38,38 @@ public class Solution2920To2929 {
     } else {
       throw new Error("存在环");
     }
+  }
+
+  /**
+   * 2928. Distribute Candies Among Children I
+   *
+   * <p>1 <= n <= 50</p>
+   * <p>1 <= limit <= 50</p>
+   */
+  public int distributeCandies(int n, int limit) {
+    if (n > limit * 3) {
+      return 0;
+    }
+    if (limit * 3 - n < n) {
+      return this.distributeCandies(limit * 3 - n, limit);
+    }
+
+    int first = Math.min(n, limit);
+    int count = 0;
+    while (first >= 0) {
+      count += this.distributeCandiesFor2Kids(n - first, limit);
+      first--;
+    }
+
+    return count;
+  }
+
+  private int distributeCandiesFor2Kids(int n, int limit) {
+    if (n > limit * 2) {
+      return 0;
+    }
+    int max = Math.min(n, limit);
+    int min = Math.max(n - limit, 0);
+    return max - min + 1;
   }
 }
