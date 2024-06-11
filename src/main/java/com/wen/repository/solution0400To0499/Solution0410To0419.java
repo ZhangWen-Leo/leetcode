@@ -1,9 +1,7 @@
 package com.wen.repository.solution0400To0499;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 public class Solution0410To0419 {
 
@@ -26,9 +24,6 @@ public class Solution0410To0419 {
     Arrays.sort(nums);
     HashSet<Integer> set = new HashSet<>();
     set.add(target);
-
-    List<Integer> list = new ArrayList<>();
-    list.add(target);
 
     for (int i = nums.length - 1; i >= 0; i--) {
       HashSet<Integer> cloneSet = (HashSet<Integer>) set.clone();
