@@ -4,6 +4,46 @@ import java.util.*;
 
 public class Solution3110To3119 {
 	/**
+	 * 3111. Minimum Rectangles to Cover Points
+	 *
+	 * <p>1 <= points.length <= 10<sup>5</sup></p>
+	 * <p>points[i].length == 2</p>
+	 * <p>0 <= xi == points[i][0] <= 10<sup>9</sup></p>
+	 * <p>0 <= yi == points[i][1] <= 10<sup>9</sup></p>
+	 * <p>0 <= w <= 10<sup>9</sup></p>
+	 * <p>All pairs (xi, yi) are distinct.</p>
+	 */
+	public int minRectanglesToCoverPoints(int[][] points, int w) {
+		Arrays.sort(points, Comparator.comparingInt(a -> a[0]));
+
+		int cur = -w - 1;
+		int count = 0;
+		for (int[] point: points) {
+			if (point[0] - cur > w) {
+				count++;
+				cur = point[0];
+			}
+		}
+
+		return count;
+	}
+//	public int minRectanglesToCoverPoints2(int[][] points, int w) {
+//		Queue<Integer> deq =  new PriorityQueue<>((a, b) -> {return a - b;});
+//		deq.addAll(Arrays.stream(points).map((a) -> a[0]).toList());
+//
+//		int cur = -w - 1;
+//		int count = 0;
+//		while (!deq.isEmpty()) {
+//			Integer x = deq.poll();
+//			if (x - cur > w) {
+//				count++;
+//				cur = x;
+//			}
+//		}
+//		return count;
+//	}
+
+	/**
 	 * 3112. Minimum Time to Visit Disappearing Nodes
 	 *
 	 * <p>1 <= n <= 5 * 10<sup>4</sup></p>

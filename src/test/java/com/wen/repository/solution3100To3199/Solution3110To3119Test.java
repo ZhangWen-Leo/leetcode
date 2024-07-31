@@ -7,6 +7,31 @@ public class Solution3110To3119Test {
 	Solution3110To3119 solution = new Solution3110To3119();
 
 	@Test
+	public void minRectanglesToCoverPoints() {
+		Assert.assertEquals(2, solution.minRectanglesToCoverPoints(new int[][]{
+			{2,1},
+			{1,0},
+			{1,4},
+			{1,8},
+			{3,5},
+			{4,6}
+		}, 1));
+		Assert.assertEquals(3, solution.minRectanglesToCoverPoints(new int[][]{
+			{0,0},
+			{1,1},
+			{2,2},
+			{3,3},
+			{4,4},
+			{5,5},
+			{6,6}
+		}, 2));
+		Assert.assertEquals(2, solution.minRectanglesToCoverPoints(new int[][]{
+			{2,3},
+			{1,2}
+		}, 0));
+	}
+
+	@Test
 	public void minimumTime() {
 		Assert.assertArrayEquals(new int[] { 0, 10, 8, 3, -1, -1, -1, 11 }, solution.minimumTime(8, new int[][] {
 				{ 0, 3, 3 },
