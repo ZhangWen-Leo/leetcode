@@ -2,6 +2,33 @@ package com.wen.repository.solution2700To2799;
 
 public class Solution2780To2789 {
 	/**
+	 * 2784. 检查数组是否是好的
+	 */
+	public boolean isGood(int[] nums) {
+		boolean[] check = new boolean[nums.length - 1];
+		boolean dup = false;
+
+		for(int num: nums) {
+			if (num >= nums.length) {
+				return false;
+			}
+			if (check[num-1]) {
+				if (num == nums.length - 1) {
+					if (dup) {
+						return false;
+					} else {
+						dup = true;
+					}
+				} else {
+					return false;
+				}
+			}
+			check[num-1] = true;
+ 		}
+		return true;
+	}
+
+	/**
 	 * 2786. Visit Array Positions to Maximize Score
 	 *
 	 * <p>2 <= nums.length <= 10<sup>5</sup></p>
